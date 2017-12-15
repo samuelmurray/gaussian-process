@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.spatial import distance_matrix
 
-from .kernel import Kernel
+from . import Kernel
 
 
 class Periodic(Kernel):

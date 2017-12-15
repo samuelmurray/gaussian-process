@@ -1,6 +1,6 @@
 import numpy as np
 
-from .kernel import Kernel
+from . import Kernel
 
 
 class Linear(Kernel):
