@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.optimize import fmin_cg
 
-from kernel import RBF
+from code.kernel import RBF
 
 
 class GP:

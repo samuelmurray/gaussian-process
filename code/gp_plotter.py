@@ -1,9 +1,9 @@
 import numpy as np
-from matplotlib import pyplot as plt
-
 import util
-from kernel import *
+from matplotlib import pyplot as plt
 from model import GP
+
+from code.kernel import *
 
 
 class GPplotter:

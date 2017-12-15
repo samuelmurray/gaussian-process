@@ -1,8 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
-
 from model import GPLVM
-from kernel import *
+
+from code.kernel import *
 
 if __name__ == "__main__":
     kern = RBF(0, 0)
