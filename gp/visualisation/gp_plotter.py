@@ -1,12 +1,10 @@
 import numpy as np
-import util
 from matplotlib import pyplot as plt
-from model import GP
 
-from code.kernel import *
+from ..model import GP
 
 
-class GPplotter:
+class GP_Plotter:
     def __init__(self, gp, func=None):
         self.func = func
         self.gp = gp
@@ -26,15 +24,12 @@ class GPplotter:
         mean, cov, log_likelihood = self.gp.posterior(self.xs)
         var = np.diag(cov).reshape(-1, 1)
         std = np.sqrt(var)  # FIXME: In some cases var will be small negative, gives RuntimeWarning.
-        try:
-            params = self.gp.get_true_params()
-        except NotImplementedError:
-            params = self.gp.get_params()  # TODO: Maybe better to force implementation of get_true_params?
+        params = self.gp.get_true_params()
         plt.cla()
-        self.ax.plot(self.xs, mean)
-        self.ax.plot(self.xs, mean + std, 'k')
-        self.ax.plot(self.xs, mean - std, 'k')
-        self.ax.scatter(self.gp.x, self.gp.y)
+        plt.plot(self.xs, mean)
+        plt.plot(self.xs, mean + std, 'k')
+        plt.plot(self.xs, mean - std, 'k')
+        plt.scatter(self.gp.x, self.gp.y)
         self.ax.set_title(f"Log likelihood: {log_likelihood}\n Parameter values: {params}")
         self.fig.canvas.draw()
 
@@ -42,38 +37,19 @@ class GPplotter:
         mean, cov, log_likelihood = self.gp.posterior(self.xs)
         f = np.random.multivariate_normal(mean[:, 0], cov, size=nsamples).T
         plt.cla()
-        self.ax.plot(self.xs, f)
-        self.ax.scatter(self.gp.x, self.gp.y)
+        plt.plot(self.xs, f)
+        plt.scatter(self.gp.x, self.gp.y)
         self.ax.set_title(f"Log likelihood: {log_likelihood}")
         self.fig.canvas.draw()
 
     def onclick(self, event):
         x = event.xdata
         y = event.ydata if self.func is None else self.func(x)
-        #self.gp.add_point(x, y)
+        self.gp.add_point(x, y)
         self.gp.optimise_hyperparameters()
-        # self.plot_posterior_sample(10)
         self.plot_posterior()
 
-
-def dkl_step():
-    y = np.array(
-        [10, 10, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 11, 12, 12,
-         12, 12, 13, 13, 13, 13, 13, 12, 13, 13, 13, 12, 13, 9, 9, 9, 8, 8, 9, 9, 9, 8, 8, 9, 9, 8, 8, 8, 9, 8, 7, 7, 7,
-         8, 8, 7, 7, 7, 7, 8, 7, 7]).reshape(-1, 1)
-    x = np.linspace(-1, 1, len(y)).reshape(-1, 1)
-    return x, y
-
-
-if __name__ == "__main__":
-    func = util.sin
-    x = np.linspace(-1.5, 1.5, 7).reshape(-1, 1)
-    y = func(x)
-    #kern = RBF(0, -1, True)
-    kern = Linear(-1)
-    gp = GP(x, y, kern=kern)
-    #gp.optimise_hyperparameters()
-    gplot = GPplotter(gp, func=func)
-    gplot.plot_posterior()
-    # gplot.plot_posterior_sample(5)
-    plt.show()
+    def add_point(self, x, y=None):
+        if y is None:
+            y = self.func(x)
+        self.gp.add_point(x, y)

@@ -1,8 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
-from model import GPLVM
 
-from code.kernel import *
+from gp.model import GPLVM
+from gp.kernel import *
 
 if __name__ == "__main__":
     kern = RBF(0, 0)
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(2, 2)
     ax[0, 0].plot(f)
     ax[0, 1].plot(m.x[:, 0], m.x[:, 1])
-    #m.optimise_latents()
+    # m.optimise_latents()
     m.optimise(5, learn_hyperparameters=True)
     ax[1, 0].scatter(m.x[:, 0], m.x[:, 1])
     ax[1, 0].plot(m.x[:, 0], m.x[:, 1])

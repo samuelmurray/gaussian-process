@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.optimize import fmin_cg
 
-from code.kernel import RBF
+from ..kernel import RBF
 
 
 class GP:
@@ -122,7 +122,3 @@ class GP:
     @property
     def half_ln2pi(self):
         return self._half_ln2pi
-
-
-if __name__ == "__main__":
-    pass
