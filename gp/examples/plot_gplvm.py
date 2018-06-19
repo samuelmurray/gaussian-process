@@ -11,13 +11,19 @@ if __name__ == "__main__":
     x = np.array([np.cos(t), np.sin(t)]).T
     mean = np.zeros(n)
     cov = kern(x, x)
-    f = np.random.multivariate_normal(mean, cov, size=10).T
+    f = np.random.multivariate_normal(mean, cov, size=4).T
     m = GPLVM(f, initialise_by_pca=False)
+
     fig, ax = plt.subplots(2, 2)
     ax[0, 0].plot(f)
+    ax[0, 0].set_title("Observed data")
+
     ax[0, 1].plot(m.x[:, 0], m.x[:, 1])
-    # m.optimise_latents()
-    m.optimise(5, learn_hyperparameters=True)
+    ax[0, 1].set_title("Initial X positions")
+
+    m.optimise(5, learn_hyperparameters=False)
+
     ax[1, 0].scatter(m.x[:, 0], m.x[:, 1])
     ax[1, 0].plot(m.x[:, 0], m.x[:, 1])
+    ax[1, 0].set_title("Final X positions")
     plt.show()
