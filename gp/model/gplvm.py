@@ -34,7 +34,7 @@ class GPLVM(GP):
         self.update()
         self.update_grad()
         k_grads = [self.kern.gradients_wrt_data(self.x, n, dim) for dim in range(self.xdim)]
-        grads = np.array([0.5 * np.trace(np.dot(self.aa_Kinv, k_grad)) for k_grad in k_grads])
+        grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads - xx
 
     def joint_loss(self, xx, n):
@@ -51,6 +51,8 @@ class GPLVM(GP):
             if learn_hyperparameters:
                 self.optimise_hyperparameters()
             plt.plot(self.x[:, 0], self.x[:, 1])
+            plt.title("Optimisation of X")
+            plt.legend(range(n_iter))
 
     def optimise_latents(self, n_iter=1):
         """Direct optimisation of the latents variables."""

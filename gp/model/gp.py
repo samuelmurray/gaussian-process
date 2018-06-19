@@ -10,11 +10,11 @@ class GP:
     def __init__(self, x=None, y=None, kern=None):
         self.kern = RBF(-1, -1) if kern is None else kern
         self.x, self.y = self.initialise_data(x, y)
-        self.beta_exp = 1
+        self.beta_exp = 50
         self.K = None
         self.L = None
         self.a = None
-        self.aa_Kinv = None
+        self.aa_k_inv = None
         self.update()
 
     def update(self):
@@ -30,7 +30,7 @@ class GP:
 
     def update_grad(self):
         k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.n)))
-        self.aa_Kinv = np.matmul(self.a, self.a.T) - self.ydim * k_inv
+        self.aa_k_inv = np.matmul(self.a, self.a.T) - self.ydim * k_inv
 
     def set_params(self, params):
         assert params.size == self.nparams
@@ -67,7 +67,7 @@ class GP:
         self.update_grad()
         k_grads = [p for p in self.kern.gradients(self.x)]
         k_grads.append(-np.eye(self.n) / self.beta_exp)
-        grads = np.array([0.5 * np.trace(np.dot(self.aa_Kinv, k_grad)) for k_grad in k_grads])
+        grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads
 
     def loss(self, params=None):
@@ -113,7 +113,7 @@ class GP:
 
     @property
     def n(self):
-        return self.x.shape[0]
+        return self.y.shape[0]
 
     @property
     def nparams(self):
