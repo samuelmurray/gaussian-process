@@ -31,6 +31,8 @@ class GP_Plotter:
         plt.plot(self.xs, mean - std, 'k')
         plt.scatter(self.gp.x, self.gp.y)
         self.ax.set_title(f"Log likelihood: {log_likelihood}\n Parameter values: {params}")
+        self.ax.set_xlim([-np.pi, np.pi])
+        self.ax.set_ylim([-1.1, 1.1])
         self.fig.canvas.draw()
 
     def plot_posterior_sample(self, nsamples):
