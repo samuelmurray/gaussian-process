@@ -20,7 +20,7 @@ class RBF(Kernel):
 
     def set_params(self, params):
         super().set_params(params)
-        if self.learn_sigma:  # TODO: Maybe this can be done in a nicer way?
+        if self.learn_sigma:
             self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
         else:
             self._gamma_exp = np.exp(params).copy().flatten()

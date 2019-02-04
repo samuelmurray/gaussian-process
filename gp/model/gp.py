@@ -23,8 +23,8 @@ class GP:
         try:
             self.L = np.linalg.cholesky(self.K)
         except np.linalg.LinAlgError:
-            #print(f"K is not a PSD matrix! :(")  # TODO: How to handle this?
-            #print(f"Maybe because of beta={self.beta_exp}?")
+            # print(f"K is not a PSD matrix! :(")  # TODO: How to handle this?
+            # print(f"Maybe because of beta={self.beta_exp}?")
             self.L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.n))
         self.a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
 
