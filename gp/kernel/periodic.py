@@ -26,6 +26,9 @@ class Periodic(Kernel):
     def get_params(self):
         return np.log(np.array([self._sigma_exp, self._gamma_exp, self._period_exp]))
 
+    def get_true_params(self):
+        return np.exp(self.get_params())
+
     def gradients(self, x):
         dist = distance_matrix(x, x)
         abs_dist = np.abs(dist)
@@ -35,3 +38,6 @@ class Periodic(Kernel):
         dperiod = 2 * self._sigma_exp * self._gamma_exp * abs_dist * np.sin(abs_dist / self._period_exp) * \
                   np.cos(abs_dist / self._period_exp) * np.exp(-self._gamma_exp * R) / self._period_exp
         return dsigma, dgamma, dperiod
+
+    def gradients_wrt_data(self, x, n=None, dim=None):
+        raise NotImplementedError

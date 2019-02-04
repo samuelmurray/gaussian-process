@@ -23,9 +23,15 @@ class Exponential(Kernel):
     def get_params(self):
         return np.log(np.array([self._sigma_exp, self._gamma_exp]))
 
+    def get_true_params(self):
+        return np.exp(self.get_params())
+
     def gradients(self, x):
         dist = distance_matrix(x, x)
         abs_dist = np.abs(dist)
         dsigma = self._sigma_exp * np.exp(-self._gamma_exp * abs_dist)
         dgamma = -self._sigma_exp * self._gamma_exp * abs_dist * np.exp(-self._gamma_exp * abs_dist)
         return dsigma, dgamma
+
+    def gradients_wrt_data(self, x, n=None, dim=None):
+        raise NotImplementedError
