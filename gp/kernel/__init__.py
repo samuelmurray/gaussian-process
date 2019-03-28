@@ -1,5 +1,5 @@
 """
-Module for all supported kernels
+Package for all supported kernels
 """
 
 from .kernel import Kernel

@@ -1,5 +1,5 @@
 """
-Module for supervised and unsupervised learning with GPs
+Package for supervised and unsupervised learning with GPs
 """
 
 from . import kernel

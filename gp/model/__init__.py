@@ -1,5 +1,5 @@
 """
-Module for all supported models
+Package for all supported models
 """
 
 from .gp import GP

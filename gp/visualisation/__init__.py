@@ -1,5 +1,5 @@
 """
-Module for visualisation wrapper classes
+Package for visualisation wrapper classes
 """
 
 from .gp_plotter import GP_Plotter
