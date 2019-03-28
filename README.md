@@ -14,4 +14,10 @@ This will install the required packages, and this project in editable mode, maki
 
 ## Examples
 
-Two examples are included, `plot_gp.py` and `plot_gplvm.py`. These can be run from terminal, and can be modified to try some other data and/or kernel.
+Two examples are included, `plot_gp.py` and `plot_gplvm.py`. These can be run from terminal, and can be modified to try some other data and/or kernel. Run the examples from the project root, as below:
+
+```
+$ python3 gp/examples.plot_gp.py
+```
+
+The default setting is interactive, when you add new data points by clicking in the plot. The model will update to account for all new observations.
