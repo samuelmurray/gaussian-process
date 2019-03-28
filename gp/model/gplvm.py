@@ -46,7 +46,7 @@ class GPLVM(GP):
     def optimise(self, n_iter, learn_hyperparameters=True):
         from matplotlib import pyplot as plt
         for i in range(n_iter):
-            print(i)
+            print(f"Iteration {i}")
             self.optimise_latents()
             if learn_hyperparameters:
                 self.optimise_hyperparameters()
