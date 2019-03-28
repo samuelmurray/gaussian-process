@@ -18,6 +18,7 @@ if __name__ == "__main__":
     ax[0, 0].plot(f)
     ax[0, 0].set_title("Observed data")
 
+    ax[0, 1].scatter(m.x[:, 0], m.x[:, 1])
     ax[0, 1].plot(m.x[:, 0], m.x[:, 1])
     ax[0, 1].set_title("Initial X positions")
 
