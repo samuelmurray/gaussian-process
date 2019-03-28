@@ -4,7 +4,7 @@ An implementation of Gaussian processes in Python. A model for supervised learni
 
 ## Requirements
 
-Running the code requires Python 3.6+ and the following packages: NumPy, Scipy, Scikit-learn and matplotlib. To install them with pip, run
+Running the code requires Python 3.6+ and the following packages: NumPy, Matplotlib, SciPy and scikit-learn. To install them with pip, run
 
 ```
 $ pip3 install -e .
