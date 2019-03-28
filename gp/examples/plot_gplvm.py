@@ -12,7 +12,7 @@ if __name__ == "__main__":
     mean = np.zeros(n)
     cov = kern(x, x)
     f = np.random.multivariate_normal(mean, cov, size=4).T
-    m = GPLVM(f, initialise_by_pca=False)
+    m = GPLVM(f, initialise_by_pca=True)
 
     fig, ax = plt.subplots(2, 2)
     ax[0, 0].plot(f)
