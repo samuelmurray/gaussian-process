@@ -82,7 +82,7 @@ class GP:
         params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.nparams), fprime=self.loss_grad,
                                                    disp=False, full_output=True)
         final_params = params if loss < loss_restart else params_restart
-        final_ll = self.log_likelihood(final_params)
+        _ = self.log_likelihood(final_params)
 
     def add_point(self, x, y):
         x = np.array(x).reshape(-1, self.xdim)
