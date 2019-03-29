@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.spatial import distance_matrix
 
-from . import Kernel
+from .kernel import Kernel
 
 
 class RBF(Kernel):

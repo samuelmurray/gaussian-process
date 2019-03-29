@@ -2,8 +2,8 @@ import numpy as np
 from scipy.optimize import fmin_cg
 from sklearn.decomposition import PCA
 
-from ..kernel import RBF
-from . import GP
+from gp.kernel import RBF
+from .gp import GP
 
 
 class GPLVM(GP):
