@@ -1,8 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from ..model import GP
-
 
 class GP_Plotter:
     def __init__(self, gp, func=None):
