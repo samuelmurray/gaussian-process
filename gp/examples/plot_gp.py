@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
-from gp.visualisation import util, GP_Plotter
-from gp.kernel import *
+from gp.visualisation import GP_Plotter
+from gp.kernel import RBF
 from gp.model import GP
 
 if __name__ == "__main__":

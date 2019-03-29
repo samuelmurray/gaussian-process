@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from gp.model import GPLVM
-from gp.kernel import *
+from gp.kernel import RBF
 
 if __name__ == "__main__":
     kern = RBF(0, 0)
