@@ -10,5 +10,3 @@ install:
   - pipenv sync --dev
 script:
   - pipenv run pytest --pep8 --flakes
-after_success:
-  - pipenv run codecov
