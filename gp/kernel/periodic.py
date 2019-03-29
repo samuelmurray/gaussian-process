@@ -35,8 +35,14 @@ class Periodic(Kernel):
         R = np.square(np.sin(abs_dist / self._period_exp))
         dsigma = self._sigma_exp * np.exp(-self._gamma_exp * R)
         dgamma = -self._sigma_exp * self._gamma_exp * R * np.exp(-self._gamma_exp * R)
-        dperiod = 2 * self._sigma_exp * self._gamma_exp * abs_dist * np.sin(abs_dist / self._period_exp) * \
-                  np.cos(abs_dist / self._period_exp) * np.exp(-self._gamma_exp * R) / self._period_exp
+        dperiod = (2
+                   * self._sigma_exp
+                   * self._gamma_exp
+                   * abs_dist
+                   * np.sin(abs_dist / self._period_exp)
+                   * np.cos(abs_dist / self._period_exp)
+                   * np.exp(-self._gamma_exp * R)
+                   / self._period_exp)
         return dsigma, dgamma, dperiod
 
     def gradients_wrt_data(self, x, n=None, dim=None):
