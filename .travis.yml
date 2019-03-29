@@ -1,0 +1,14 @@
+os:
+  - linux
+language: python
+dist: xenial
+python:
+  - "3.6"
+  - "3.7"
+install:
+  - pip install pipenv
+  - pipenv sync --dev
+script:
+  - pipenv run pytest --pep8 --flakes
+after_success:
+  - pipenv run codecov
