@@ -4,6 +4,7 @@ An implementation of Gaussian processes in Python. A model for supervised learni
 
 [![Build Status](https://travis-ci.com/samuelmurray/gaussian-process.svg?branch=master)](https://travis-ci.com/samuelmurray/gaussian-process)
 
+
 ## Requirements
 
 Running the code requires Python 3.6+ and the following packages: NumPy, Matplotlib, SciPy and scikit-learn. To install them with pip, run
@@ -13,6 +14,7 @@ $ pip3 install -e .
 ```
 
 This will install the required packages, and this project in editable mode, making the examples runnable from terminal.
+
 
 ## Examples
 
