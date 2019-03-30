@@ -2,6 +2,8 @@
 
 An implementation of Gaussian processes in Python. A model for supervised learning, GP, as well as a model for unsupervised learning, GPLVM, are provided. Multiple kernels are implemented, along with gradients to optimise hyperparameters.
 
+[![Build Status](https://travis-ci.com/samuelmurray/gaussian-process.svg?branch=master)](https://travis-ci.com/samuelmurray/gaussian-process)
+
 ## Requirements
 
 Running the code requires Python 3.6+ and the following packages: NumPy, Matplotlib, SciPy and scikit-learn. To install them with pip, run
