@@ -15,6 +15,12 @@ $ pip3 install -e .
 
 This will install the required packages, and this project in editable mode, making the examples runnable from terminal.
 
+Alternatively, install with pipenv using the provided Pipfile:
+
+```
+$ pipenv sync
+```
+
 
 ## Examples
 
