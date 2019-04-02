@@ -5,8 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
-pytest-pep8 = "*"
 pytest-flakes = "*"
+pytest-pep8 = "*"
 
 [packages]
 gp = {editable = true,path = "."}
