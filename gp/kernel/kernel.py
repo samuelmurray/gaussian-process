@@ -13,7 +13,8 @@ class Kernel(ABC):
         assert x1.shape[1] == x2.shape[1], "Vectors must be of matching dimension"
 
     def set_params(self, params):
-        assert params.size == self.nparams, f"Provided {params.size} params; must be {self.nparams}"
+        assert params.size == self.nparams, \
+            f"Provided {params.size} params; must be {self.nparams}"
 
     def get_params(self):
         raise NotImplementedError

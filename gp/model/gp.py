@@ -56,8 +56,9 @@ class GP:
         if params is not None:
             self.set_params(params)
         self.update()
-        log_likelihood = - 0.5 * np.trace(np.dot(self.y.T, self.a)) - self.ydim * np.sum(np.log(np.diag(self.L))) \
-                         - self.ydim * self.n * self.half_ln2pi
+        log_likelihood = (- 0.5 * np.trace(np.dot(self.y.T, self.a))
+                          - self.ydim * np.sum(np.log(np.diag(self.L)))
+                          - self.ydim * self.n * self.half_ln2pi)
         return log_likelihood
 
     def log_likelihood_grad(self, params=None):
@@ -77,30 +78,35 @@ class GP:
         return -self.log_likelihood_grad(params)
 
     def optimise_hyperparameters(self):
-        params, loss, *_ = fmin_cg(self.loss, x0=np.hstack((self.get_params())), fprime=self.loss_grad, disp=False,
-                                   full_output=True)
-        params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.nparams), fprime=self.loss_grad,
-                                                   disp=False, full_output=True)
+        params, loss, *_ = fmin_cg(self.loss, x0=np.hstack((self.get_params())),
+                                   fprime=self.loss_grad, disp=False, full_output=True)
+        params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.nparams),
+                                                   fprime=self.loss_grad, disp=False,
+                                                   full_output=True)
         final_params = params if loss < loss_restart else params_restart
         _ = self.log_likelihood(final_params)
 
     def add_point(self, x, y):
         x = np.array(x).reshape(-1, self.xdim)
         y = np.array(y).reshape(-1, self.ydim)
-        assert x.shape[0] == y.shape[0], f"First dim of x {x.shape} not matching that of y {y.shape}"
+        assert x.shape[0] == y.shape[
+            0], f"First dim of x {x.shape} not matching that of y {y.shape}"
         self.x = np.vstack((self.x, x))
         self.y = np.vstack((self.y, y))
         self.update()
 
     @staticmethod
     def initialise_data(x, y):
-        assert (x is None and y is None) or (x is not None and y is not None), "Provide both x and y or neither"
+        both_are_none = x is None and y is None
+        neither_are_none = x is not None and y is not None
+        assert both_are_none or neither_are_none, "Provide both x and y or neither"
         if x is None:
             x = np.zeros((0, 1))
             y = np.zeros((0, 1))
         assert x.ndim == 2, f"x is {x.ndim}D; needs to be 2D array of size NxQ"
         assert y.ndim == 2, f"y is {y.ndim}D; needs to be 2D array of size NxD"
-        assert x.shape[0] == y.shape[0], f"First dim of x {x.shape} not matching that of y {y.shape}"
+        assert x.shape[0] == y.shape[0], \
+            f"First dim of x {x.shape} not matching that of y {y.shape}"
         return x, y
 
     @property

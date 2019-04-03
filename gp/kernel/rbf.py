@@ -41,7 +41,10 @@ class RBF(Kernel):
         if self.learn_sigma:
             dsigma = self._sigma_exp * np.exp(-self._gamma_exp * square_dist)
             grads.append(dsigma)
-        dgamma = -self._sigma_exp * self._gamma_exp * square_dist * np.exp(-self._gamma_exp * square_dist)
+        dgamma = (-self._sigma_exp
+                  * self._gamma_exp
+                  * square_dist
+                  * np.exp(-self._gamma_exp * square_dist))
         grads.append(dgamma)
         return grads
 
@@ -57,7 +60,10 @@ class RBF(Kernel):
             for n_iter in range(N):
                 for d_iter in range(D):
                     dkdx = np.zeros((N, N))
-                    dkdx[n_iter, :] = -2 * self._gamma_exp * (x[n_iter, d_iter] - x[:, d_iter]) * kxx[n_iter, :]
+                    dkdx[n_iter, :] = (-2
+                                       * self._gamma_exp
+                                       * (x[n_iter, d_iter] - x[:, d_iter])
+                                       * kxx[n_iter, :])
                     dkdx[:, n_iter] = dkdx[n_iter, :]
                     dkdx_list.append(dkdx.copy())
             return dkdx_list
