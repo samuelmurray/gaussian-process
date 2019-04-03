@@ -21,7 +21,7 @@ class GP_Plotter:
     def plot_posterior(self):
         mean, cov, log_likelihood = self.gp.posterior(self.xs)
         var = np.diag(cov).reshape(-1, 1)
-        std = np.sqrt(var)  # FIXME: In some cases var will be small negative, gives RuntimeWarning.
+        std = np.sqrt(var)  # FIXME: In some cases var will be small negative, gives RuntimeWarning
         params = self.gp.get_true_params()
         plt.cla()
         plt.plot(self.xs, mean)

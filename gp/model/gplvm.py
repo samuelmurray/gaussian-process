@@ -60,8 +60,8 @@ class GPLVM(GP):
             xtemp = np.zeros(self.x.shape)
             for i, yy in enumerate(self.y):
                 original_x = self.x[i].copy()
-                xopt, loss, *_ = fmin_cg(self.joint_loss, self.x[i], fprime=self.joint_loss_grad, args=(i,), disp=False,
-                                         full_output=True)
+                xopt, loss, *_ = fmin_cg(self.joint_loss, self.x[i], fprime=self.joint_loss_grad,
+                                         args=(i,), disp=False, full_output=True)
                 self.x[i] = original_x
                 xtemp[i] = xopt
             self.x = xtemp.copy()
