@@ -105,8 +105,8 @@ class GP:
             y = np.zeros((0, 1))
         assert x.ndim == 2, f"x is {x.ndim}D; needs to be 2D array of size NxQ"
         assert y.ndim == 2, f"y is {y.ndim}D; needs to be 2D array of size NxD"
-        assert x.shape[0] == y.shape[0], f"First dim of x {x.shape} " \
-            f"not matching that of y {y.shape}"
+        assert x.shape[0] == y.shape[0], \
+            f"First dim of x {x.shape} not matching that of y {y.shape}"
         return x, y
 
     @property
