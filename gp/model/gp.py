@@ -14,7 +14,7 @@ class GP:
         self.x, self.y = self.initialise_data(x, y)
         self.beta_exp = 50
         self.k_xx = self._compute_k_xx()
-        self.L = self._compute_L()
+        self.chol_xx = self._compute_chol_xx()
         self.a = self._compute_a()
         self.aa_k_inv = self._compute_aa_k_inv()
 
@@ -22,26 +22,26 @@ class GP:
         k_xx = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
         return k_xx
 
-    def _compute_L(self) -> np.ndarray:
+    def _compute_chol_xx(self) -> np.ndarray:
         try:
-            L = np.linalg.cholesky(self.k_xx)
+            chol_xx = np.linalg.cholesky(self.k_xx)
         except np.linalg.LinAlgError:
-            L = np.linalg.cholesky(self.k_xx + 1e-10 * np.eye(self.num_data))
-        return L
+            chol_xx = np.linalg.cholesky(self.k_xx + 1e-10 * np.eye(self.num_data))
+        return chol_xx
 
     def _compute_a(self) -> np.ndarray:
-        a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
+        a = np.linalg.solve(self.chol_xx.T, np.linalg.solve(self.chol_xx, self.y))
         return a
 
     def _compute_aa_k_inv(self) -> np.ndarray:
-        k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.num_data)))
+        k_inv = np.linalg.solve(self.chol_xx.T, np.linalg.solve(self.chol_xx, np.eye(self.num_data)))
         aa_k_inv = np.matmul(self.a, self.a.T) - self.y_dim * k_inv
         return aa_k_inv
 
     def update(self) -> None:
         # Page 19 in GPML
         self.k_xx = self._compute_k_xx()
-        self.L = self._compute_L()
+        self.chol_xx = self._compute_chol_xx()
         self.a = self._compute_a()
 
     def update_grad(self) -> None:
@@ -62,7 +62,7 @@ class GP:
         k_xs_x = self.kern(xs, self.x)
         k_xs_xs = self.kern(xs, xs)
         mean = np.matmul(k_xs_x, self.a)
-        v = np.linalg.solve(self.L, k_xs_x.T)
+        v = np.linalg.solve(self.chol_xx, k_xs_x.T)
         cov = k_xs_xs - np.matmul(v.T, v) + np.eye(xs.shape[0]) / self.beta_exp
         log_likelihood = self.log_likelihood()
         return mean, cov, log_likelihood
@@ -72,7 +72,7 @@ class GP:
             self.set_params(params)
         self.update()
         log_likelihood = (- 0.5 * np.trace(np.dot(self.y.T, self.a))
-                          - self.y_dim * np.sum(np.log(np.diag(self.L)))
+                          - self.y_dim * np.sum(np.log(np.diag(self.chol_xx)))
                           - self.y_dim * self.num_data * self.half_ln2pi)
         return log_likelihood
 
