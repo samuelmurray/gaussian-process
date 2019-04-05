@@ -2,12 +2,13 @@ import numpy as np
 from scipy.optimize import fmin_cg
 from sklearn.decomposition import PCA
 
-from gp.kernel import RBF
+from gp.kernel import Kernel, RBF
 from .gp import GP
 
 
 class GPLVM(GP):
-    def __init__(self, y: np.ndarray, kern=None, initialise_by_pca: bool = False) -> None:
+    def __init__(self, y: np.ndarray, kern: Kernel = None,
+                 initialise_by_pca: bool = False) -> None:
         if kern is None:
             kern = RBF(-1, -1)
         latent_dim = 2
