@@ -48,14 +48,15 @@ class GP:
     def update_grad(self) -> None:
         self.aa_k_inv = self._compute_aa_k_inv()
 
-    def set_params(self, params: np.ndarray) -> None:
-        assert params.size == self.num_params
-        self.beta_exp = np.exp(params[-1])
-        self.kernel.params = params[:-1]
-
     @property
     def params(self) -> np.ndarray:
         return np.hstack((self.kernel.params, np.log(self.beta_exp)))
+
+    @params.setter
+    def params(self, params: np.ndarray) -> None:
+        assert params.size == self.num_params
+        self.beta_exp = np.exp(params[-1])
+        self.kernel.params = params[:-1]
 
     @property
     def true_params(self) -> np.ndarray:
@@ -72,7 +73,7 @@ class GP:
 
     def log_likelihood(self, params: np.ndarray = None) -> float:
         if params is not None:
-            self.set_params(params)
+            self.params = params
         self.update()
         log_likelihood = (- 0.5 * np.trace(np.dot(self.y.T, self.a))
                           - self.y_dim * np.sum(np.log(np.diag(self.chol_xx)))
@@ -81,7 +82,7 @@ class GP:
 
     def log_likelihood_grad(self, params: np.ndarray = None) -> np.ndarray:
         if params is not None:
-            self.set_params(params)
+            self.params = params
         self.update()
         self.update_grad()
         k_grads = [p for p in self.kernel.gradients(self.x)]
