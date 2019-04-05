@@ -27,7 +27,7 @@ class Kernel(ABC):
     def gradients(self, x):
         raise NotImplementedError
 
-    def gradients_wrt_data(self, x, n: int = None, dim=None):
+    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim: int = None):
         raise NotImplementedError
 
     @property

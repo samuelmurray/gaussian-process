@@ -49,5 +49,5 @@ class Exponential(Kernel):
         grads.append(dgamma)
         return grads
 
-    def gradients_wrt_data(self, x, n: int = None, dim=None):
+    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim: int = None):
         raise NotImplementedError
