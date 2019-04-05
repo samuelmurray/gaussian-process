@@ -1,13 +1,13 @@
 import numpy as np
 from scipy.optimize import fmin_cg
 
-from gp.kernel import RBF
+from gp.kernel import Kernel, RBF
 
 
 class GP:
     _half_ln2pi = 0.5 * np.log(2 * np.pi)
 
-    def __init__(self, x: np.ndarray = None, y: np.ndarray = None, kern=None) -> None:
+    def __init__(self, x: np.ndarray = None, y: np.ndarray = None, kern: Kernel = None) -> None:
         self.kern = RBF(-1, -1) if kern is None else kern
         self.x, self.y = self.initialise_data(x, y)
         self.beta_exp = 50
