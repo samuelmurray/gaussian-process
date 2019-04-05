@@ -1,6 +1,7 @@
 from typing import Callable
 
 import numpy as np
+from matplotlib.backend_bases import MouseEvent
 from matplotlib import pyplot as plt
 
 from gp.model.gp import GP
@@ -46,7 +47,7 @@ class GP_Plotter:
         self.ax.set_title(f"Log likelihood: {log_likelihood}")
         self.fig.canvas.draw()
 
-    def onclick(self, event) -> None:
+    def onclick(self, event: MouseEvent) -> None:
         x = event.xdata
         y = event.ydata if self.func is None else self.func(x)
         self.gp.add_point(x, y)
