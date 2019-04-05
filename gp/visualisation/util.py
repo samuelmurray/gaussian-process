@@ -10,11 +10,11 @@ def cos(x):
 
 
 def sin2(x):
-    return np.square(sin(x)) - 0.5
+    return np.square(np.sin(x)) - 0.5
 
 
 def sincos(x):
-    return sin(x) * cos(x)
+    return np.sin(x) * np.cos(x)
 
 
 def lin(x):
