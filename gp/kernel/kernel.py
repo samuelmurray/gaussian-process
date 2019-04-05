@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import List
 
 import numpy as np
 
@@ -20,13 +21,13 @@ class Kernel(ABC):
         if params.size != self.nparams:
             raise ValueError(f"Provided {params.size} params; must be {self.nparams}")
 
-    def get_params(self):
+    def get_params(self) -> np.ndarray:
         raise NotImplementedError
 
-    def get_true_params(self):
+    def get_true_params(self) -> np.ndarray:
         raise NotImplementedError
 
-    def gradients(self, x):
+    def gradients(self, x) -> List[np.ndarray]:
         raise NotImplementedError
 
     def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim: int = None):
