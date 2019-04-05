@@ -26,12 +26,12 @@ class Kernel(abc.ABC):
         if params.size != self.num_params:
             raise ValueError(f"Provided {params.size} params; must be {self.num_params}")
 
-    @property
+    @property  # type: ignore  # https://github.com/python/mypy/issues/4165
     @abc.abstractmethod
     def params(self) -> np.ndarray:
         raise NotImplementedError
 
-    @params.setter
+    @params.setter  # type: ignore  # https://github.com/python/mypy/issues/4165
     @abc.abstractmethod
     def params(self, params: np.ndarray) -> None:
         raise NotImplementedError

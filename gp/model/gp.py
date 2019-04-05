@@ -56,7 +56,8 @@ class GP:
     def params(self, params: np.ndarray) -> None:
         assert params.size == self.num_params
         self.beta_exp = np.exp(params[-1])
-        self.kernel.params = params[:-1]
+        self.kernel.params = params[:-1]  # type: ignore
+        # https://github.com/python/mypy/issues/4165
 
     @property
     def true_params(self) -> np.ndarray:
