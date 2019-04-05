@@ -12,7 +12,7 @@ class RBF(Kernel):
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
 
-    def __call__(self, x1, x2) -> np.ndarray:
+    def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
         super().__call__(x1, x2)
         dist = distance_matrix(x1, x2)
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.square(dist))
@@ -48,7 +48,7 @@ class RBF(Kernel):
         grads.append(dgamma)
         return grads
 
-    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim=None):
+    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim: int = None):
         """Compute the derivative matrix of the kernel wrt the data.
         This returns a list of matrices: each matrix is NxN, and there are N*D of them!"""
         N, D = x.shape
