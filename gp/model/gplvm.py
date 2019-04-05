@@ -7,7 +7,7 @@ from .gp import GP
 
 
 class GPLVM(GP):
-    def __init__(self, y, kern=None, initialise_by_pca=False):
+    def __init__(self, y, kern=None, initialise_by_pca=False) -> None:
         if kern is None:
             kern = RBF(-1, -1)
         latent_dim = 2
@@ -43,7 +43,7 @@ class GPLVM(GP):
     def joint_loss_grad(self, xx, n):
         return -self.log_joint_grad(xx, n)
 
-    def optimise(self, n_iter, learn_hyperparameters=True):
+    def optimise(self, n_iter, learn_hyperparameters=True) -> None:
         from matplotlib import pyplot as plt
         for i in range(n_iter):
             print(f"Iteration {i}")
@@ -54,7 +54,7 @@ class GPLVM(GP):
             plt.title("Optimisation of X")
             plt.legend(range(n_iter))
 
-    def optimise_latents(self, n_iter=1):
+    def optimise_latents(self, n_iter=1) -> None:
         """Direct optimisation of the latents variables."""
         for iteration in range(n_iter):
             xtemp = np.zeros(self.x.shape)

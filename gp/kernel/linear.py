@@ -4,7 +4,7 @@ from .kernel import Kernel
 
 
 class Linear(Kernel):
-    def __init__(self, sigma, learn_sigma=True):
+    def __init__(self, sigma, learn_sigma=True) -> None:
         self.learn_sigma = learn_sigma
         nparams = 1 if self.learn_sigma else 0
         super().__init__(nparams=nparams)
@@ -16,7 +16,7 @@ class Linear(Kernel):
         kx1x2 = self._sigma_exp * prod
         return kx1x2
 
-    def set_params(self, params):
+    def set_params(self, params) -> None:
         super().set_params(params)
         if self.learn_sigma:
             self._sigma_exp = np.exp(params).flatten()

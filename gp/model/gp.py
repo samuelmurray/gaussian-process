@@ -7,7 +7,7 @@ from gp.kernel import RBF
 class GP:
     _half_ln2pi = 0.5 * np.log(2 * np.pi)
 
-    def __init__(self, x=None, y=None, kern=None):
+    def __init__(self, x=None, y=None, kern=None) -> None:
         self.kern = RBF(-1, -1) if kern is None else kern
         self.x, self.y = self.initialise_data(x, y)
         self.beta_exp = 50
@@ -17,7 +17,7 @@ class GP:
         self.aa_k_inv = None
         self.update()
 
-    def update(self):
+    def update(self) -> None:
         # Page 19 in GPML
         self.K = self.kern(self.x, self.x) + np.eye(self.n) / self.beta_exp
         try:
@@ -28,11 +28,11 @@ class GP:
             self.L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.n))
         self.a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
 
-    def update_grad(self):
+    def update_grad(self) -> None:
         k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.n)))
         self.aa_k_inv = np.matmul(self.a, self.a.T) - self.ydim * k_inv
 
-    def set_params(self, params):
+    def set_params(self, params) -> None:
         assert params.size == self.nparams
         self.beta_exp = np.exp(params[-1])
         self.kern.set_params(params[:-1])
@@ -77,7 +77,7 @@ class GP:
     def loss_grad(self, params=None):
         return -self.log_likelihood_grad(params)
 
-    def optimise_hyperparameters(self):
+    def optimise_hyperparameters(self) -> None:
         params, loss, *_ = fmin_cg(self.loss, x0=np.hstack((self.get_params())),
                                    fprime=self.loss_grad, disp=False, full_output=True)
         params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.nparams),
@@ -86,7 +86,7 @@ class GP:
         final_params = params if loss < loss_restart else params_restart
         _ = self.log_likelihood(final_params)
 
-    def add_point(self, x, y):
+    def add_point(self, x, y) -> None:
         x = np.array(x).reshape(-1, self.xdim)
         y = np.array(y).reshape(-1, self.ydim)
         assert x.shape[0] == y.shape[

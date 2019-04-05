@@ -6,13 +6,13 @@ class Kernel(ABC):
     Base class for all kernels
     """
 
-    def __init__(self, nparams):
+    def __init__(self, nparams) -> None:
         self._nparams = nparams
 
     def __call__(self, x1, x2):
         assert x1.shape[1] == x2.shape[1], "Vectors must be of matching dimension"
 
-    def set_params(self, params):
+    def set_params(self, params) -> None:
         assert params.size == self.nparams, \
             f"Provided {params.size} params; must be {self.nparams}"
 

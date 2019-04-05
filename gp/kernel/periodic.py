@@ -5,7 +5,7 @@ from .kernel import Kernel
 
 
 class Periodic(Kernel):
-    def __init__(self, sigma, gamma, period):
+    def __init__(self, sigma, gamma, period) -> None:
         super().__init__(nparams=3)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
@@ -19,7 +19,7 @@ class Periodic(Kernel):
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * R)
         return kx1x2
 
-    def set_params(self, params):
+    def set_params(self, params) -> None:
         super().set_params(params)
         self._sigma_exp, self._gamma_exp, self._period_exp = np.exp(params).copy().flatten()
 

@@ -5,7 +5,7 @@ from .kernel import Kernel
 
 
 class RBF(Kernel):
-    def __init__(self, sigma, gamma, learn_sigma=True):
+    def __init__(self, sigma, gamma, learn_sigma=True) -> None:
         self.learn_sigma = learn_sigma
         nparams = 2 if self.learn_sigma else 1
         super().__init__(nparams=nparams)
@@ -18,7 +18,7 @@ class RBF(Kernel):
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.square(dist))
         return kx1x2
 
-    def set_params(self, params):
+    def set_params(self, params) -> None:
         super().set_params(params)
         if self.learn_sigma:
             self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()

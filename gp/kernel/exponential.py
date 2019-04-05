@@ -5,7 +5,7 @@ from .kernel import Kernel
 
 
 class Exponential(Kernel):
-    def __init__(self, sigma, gamma):
+    def __init__(self, sigma, gamma) -> None:
         super().__init__(nparams=2)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
@@ -16,7 +16,7 @@ class Exponential(Kernel):
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.abs(dist))
         return kx1x2
 
-    def set_params(self, params):
+    def set_params(self, params) -> None:
         super().set_params(params)
         self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
 
