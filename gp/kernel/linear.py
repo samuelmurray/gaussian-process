@@ -21,11 +21,11 @@ class Linear(Kernel):
         if self.learn_sigma:
             self._sigma_exp = np.exp(params).flatten()
 
-    def get_params(self):
+    def get_params(self) -> np.ndarray:
         params = np.log(np.array(self._sigma_exp)) if self.learn_sigma else []
         return params
 
-    def get_true_params(self):
+    def get_true_params(self) -> np.ndarray:
         return np.exp(self.get_params())
 
     def gradients(self, x: np.ndarray):

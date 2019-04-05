@@ -18,7 +18,7 @@ class GPLVM(GP):
             x = np.random.normal(0, 1, size=(y.shape[0], latent_dim))
         super().__init__(x, y, kern=kern)
 
-    def log_joint(self, xx: np.ndarray, n: int):
+    def log_joint(self, xx: np.ndarray, n: int) -> float:
         """The log joint: log p(y,x)=log p(y|x) + log p(x). We find MAP solution wrt x.
         log p(y|x) is the likelihood from GP regression; p(x) is Gaussian prior on x.
         Used when changing the ith latent variable to xx"""
@@ -28,7 +28,7 @@ class GPLVM(GP):
         log_prior = - 0.5 * np.sum(np.square(self.x)) - self.xdim * self.n * self.half_ln2pi
         return log_likelihood + log_prior
 
-    def log_joint_grad(self, xx: np.ndarray, n: int):
+    def log_joint_grad(self, xx: np.ndarray, n: int) -> np.ndarray:
         """The gradient of the log joint: d/dx {p(y,x)}. Used to find MAP solution of joint."""
         self.x[n] = xx
         self.update()
@@ -37,10 +37,10 @@ class GPLVM(GP):
         grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads - xx
 
-    def joint_loss(self, xx: np.ndarray, n: int):
+    def joint_loss(self, xx: np.ndarray, n: int) -> float:
         return -self.log_joint(xx, n)
 
-    def joint_loss_grad(self, xx: np.ndarray, n: int):
+    def joint_loss_grad(self, xx: np.ndarray, n: int) -> np.ndarray:
         return -self.log_joint_grad(xx, n)
 
     def optimise(self, n_iter: int, learn_hyperparameters: bool = True) -> None:

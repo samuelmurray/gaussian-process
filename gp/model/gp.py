@@ -52,7 +52,7 @@ class GP:
         log_likelihood = self.log_likelihood()
         return mean, cov, log_likelihood
 
-    def log_likelihood(self, params: np.ndarray = None):
+    def log_likelihood(self, params: np.ndarray = None) -> float:
         if params is not None:
             self.set_params(params)
         self.update()
@@ -71,7 +71,7 @@ class GP:
         grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads
 
-    def loss(self, params: np.ndarray = None):
+    def loss(self, params: np.ndarray = None) -> float:
         return -self.log_likelihood(params)
 
     def loss_grad(self, params: np.ndarray = None) -> np.ndarray:
