@@ -91,8 +91,8 @@ class GP:
     def add_point(self, x: np.ndarray, y: np.ndarray) -> None:
         x = np.array(x).reshape(-1, self.x_dim)
         y = np.array(y).reshape(-1, self.y_dim)
-        assert x.shape[0] == y.shape[
-            0], f"First dim of x {x.shape} not matching that of y {y.shape}"
+        assert x.shape[0] == y.shape[0], \
+            f"First dim of x {x.shape} not matching that of y {y.shape}"
         self.x = np.vstack((self.x, x))
         self.y = np.vstack((self.y, y))
         self.update()
