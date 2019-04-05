@@ -35,7 +35,7 @@ class Kernel(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def gradients(self, x) -> List[np.ndarray]:
+    def gradients(self, x: np.ndarray) -> List[np.ndarray]:
         raise NotImplementedError
 
     @abc.abstractmethod
