@@ -8,7 +8,7 @@ class Kernel(ABC):
     Base class for all kernels
     """
 
-    def __init__(self, nparams) -> None:
+    def __init__(self, nparams: int) -> None:
         self._nparams = nparams
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray):

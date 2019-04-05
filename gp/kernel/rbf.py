@@ -5,7 +5,7 @@ from .kernel import Kernel
 
 
 class RBF(Kernel):
-    def __init__(self, sigma, gamma, learn_sigma: bool = True) -> None:
+    def __init__(self, sigma: float, gamma: float, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
         nparams = 2 if self.learn_sigma else 1
         super().__init__(nparams=nparams)

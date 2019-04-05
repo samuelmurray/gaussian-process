@@ -5,7 +5,7 @@ from .kernel import Kernel
 
 
 class Periodic(Kernel):
-    def __init__(self, sigma, gamma, period) -> None:
+    def __init__(self, sigma: float, gamma: float, period: float) -> None:
         super().__init__(nparams=3)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
