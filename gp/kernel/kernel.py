@@ -23,8 +23,8 @@ class Kernel(abc.ABC):
                              f"but x1.shape = {x1.shape} and x2.shape = {x2.shape}")
 
     def set_params(self, params: np.ndarray) -> None:
-        if params.size != self.nparams:
-            raise ValueError(f"Provided {params.size} params; must be {self.nparams}")
+        if params.size != self.num_params:
+            raise ValueError(f"Provided {params.size} params; must be {self.num_params}")
 
     @abc.abstractmethod
     def get_params(self) -> np.ndarray:
@@ -43,5 +43,5 @@ class Kernel(abc.ABC):
         raise NotImplementedError
 
     @property
-    def nparams(self) -> int:
+    def num_params(self) -> int:
         return self._nparams

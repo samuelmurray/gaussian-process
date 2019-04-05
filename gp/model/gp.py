@@ -125,7 +125,7 @@ class GP:
 
     @property
     def num_params(self) -> int:
-        return self.kern.nparams + 1
+        return self.kern.num_params + 1
 
     @property
     def half_ln2pi(self) -> float:
