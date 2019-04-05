@@ -53,7 +53,8 @@ class GP:
         self.beta_exp = np.exp(params[-1])
         self.kernel.set_params(params[:-1])
 
-    def get_params(self) -> np.ndarray:
+    @property
+    def params(self) -> np.ndarray:
         return np.hstack((self.kernel.get_params(), np.log(self.beta_exp)))
 
     @property
@@ -95,7 +96,7 @@ class GP:
         return -self.log_likelihood_grad(params)
 
     def optimise_hyperparameters(self) -> None:
-        params, loss, *_ = fmin_cg(self.loss, x0=np.hstack((self.get_params())),
+        params, loss, *_ = fmin_cg(self.loss, x0=np.hstack((self.params)),
                                    fprime=self.loss_grad, disp=False, full_output=True)
         params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.num_params),
                                                    fprime=self.loss_grad, disp=False,
