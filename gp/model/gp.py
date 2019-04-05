@@ -21,17 +21,17 @@ class GP:
 
     def update(self) -> None:
         # Page 19 in GPML
-        self.K = self.kern(self.x, self.x) + np.eye(self.n) / self.beta_exp
+        self.K = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
         try:
             self.L = np.linalg.cholesky(self.K)
         except np.linalg.LinAlgError:
             # print(f"K is not a PSD matrix! :(")  # TODO: How to handle this?
             # print(f"Maybe because of beta={self.beta_exp}?")
-            self.L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.n))
+            self.L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.num_data))
         self.a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
 
     def update_grad(self) -> None:
-        k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.n)))
+        k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.num_data)))
         self.aa_k_inv = np.matmul(self.a, self.a.T) - self.y_dim * k_inv
 
     def set_params(self, params: np.ndarray) -> None:
@@ -60,7 +60,7 @@ class GP:
         self.update()
         log_likelihood = (- 0.5 * np.trace(np.dot(self.y.T, self.a))
                           - self.y_dim * np.sum(np.log(np.diag(self.L)))
-                          - self.y_dim * self.n * self.half_ln2pi)
+                          - self.y_dim * self.num_data * self.half_ln2pi)
         return log_likelihood
 
     def log_likelihood_grad(self, params: np.ndarray = None) -> np.ndarray:
@@ -69,7 +69,7 @@ class GP:
         self.update()
         self.update_grad()
         k_grads = [p for p in self.kern.gradients(self.x)]
-        k_grads.append(-np.eye(self.n) / self.beta_exp)
+        k_grads.append(-np.eye(self.num_data) / self.beta_exp)
         grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads
 
@@ -120,7 +120,7 @@ class GP:
         return self.y.shape[1]
 
     @property
-    def n(self) -> int:
+    def num_data(self) -> int:
         return self.y.shape[0]
 
     @property

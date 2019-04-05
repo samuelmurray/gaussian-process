@@ -26,7 +26,7 @@ class GPLVM(GP):
         self.x[n] = xx
         self.update()
         log_likelihood = self.log_likelihood()
-        log_prior = - 0.5 * np.sum(np.square(self.x)) - self.x_dim * self.n * self.half_ln2pi
+        log_prior = - 0.5 * np.sum(np.square(self.x)) - self.x_dim * self.num_data * self.half_ln2pi
         return log_likelihood + log_prior
 
     def log_joint_grad(self, xx: np.ndarray, n: int) -> np.ndarray:
