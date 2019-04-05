@@ -13,9 +13,7 @@ class Kernel(ABC):
         self._nparams = nparams
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
-        if x1.shape[1] != x2.shape[1]:
-            raise ValueError(f"Vectors must be of matching dimension, "
-                             f"but x1.shape = {x1.shape} and x2.shape = {x2.shape}")
+        raise NotImplementedError
 
     @staticmethod
     def _check_input_is_valid(x1: np.ndarray, x2: np.ndarray) -> None:
