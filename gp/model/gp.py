@@ -55,7 +55,7 @@ class GP:
 
     @property
     def params(self) -> np.ndarray:
-        return np.hstack((self.kernel.get_params(), np.log(self.beta_exp)))
+        return np.hstack((self.kernel.params, np.log(self.beta_exp)))
 
     @property
     def true_params(self) -> np.ndarray:

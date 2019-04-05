@@ -27,7 +27,8 @@ class RBF(Kernel):
         else:
             self._gamma_exp = np.exp(params).copy().flatten()
 
-    def get_params(self) -> np.ndarray:
+    @property
+    def params(self) -> np.ndarray:
         if self.learn_sigma:
             return np.log(np.array([self._sigma_exp, self._gamma_exp]))
         else:
@@ -35,7 +36,7 @@ class RBF(Kernel):
 
     @property
     def true_params(self) -> np.ndarray:
-        return np.exp(self.get_params())
+        return np.exp(self.params)
 
     def gradients(self, x: np.ndarray) -> List[np.ndarray]:
         dist = distance_matrix(x, x)
