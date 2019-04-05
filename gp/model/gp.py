@@ -7,7 +7,7 @@ from gp.kernel import RBF
 class GP:
     _half_ln2pi = 0.5 * np.log(2 * np.pi)
 
-    def __init__(self, x=None, y=None, kern=None) -> None:
+    def __init__(self, x: np.ndarray = None, y: np.ndarray = None, kern=None) -> None:
         self.kern = RBF(-1, -1) if kern is None else kern
         self.x, self.y = self.initialise_data(x, y)
         self.beta_exp = 50
@@ -52,7 +52,7 @@ class GP:
         log_likelihood = self.log_likelihood()
         return mean, cov, log_likelihood
 
-    def log_likelihood(self, params=None):
+    def log_likelihood(self, params: np.ndarray = None):
         if params is not None:
             self.set_params(params)
         self.update()
@@ -61,7 +61,7 @@ class GP:
                           - self.ydim * self.n * self.half_ln2pi)
         return log_likelihood
 
-    def log_likelihood_grad(self, params=None) -> np.ndarray:
+    def log_likelihood_grad(self, params: np.ndarray = None) -> np.ndarray:
         if params is not None:
             self.set_params(params)
         self.update()
@@ -71,10 +71,10 @@ class GP:
         grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads
 
-    def loss(self, params=None):
+    def loss(self, params: np.ndarray = None):
         return -self.log_likelihood(params)
 
-    def loss_grad(self, params=None) -> np.ndarray:
+    def loss_grad(self, params: np.ndarray = None) -> np.ndarray:
         return -self.log_likelihood_grad(params)
 
     def optimise_hyperparameters(self) -> None:
