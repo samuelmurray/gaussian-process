@@ -8,8 +8,8 @@ from .kernel import Kernel
 class Linear(Kernel):
     def __init__(self, sigma: float, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
-        nparams = 1 if self.learn_sigma else 0
-        super().__init__(num_params=nparams)
+        num_params = 1 if self.learn_sigma else 0
+        super().__init__(num_params=num_params)
         self._sigma_exp = np.exp(sigma)
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
@@ -18,17 +18,20 @@ class Linear(Kernel):
         kx1x2 = self._sigma_exp * prod
         return kx1x2
 
-    def set_params(self, params: np.ndarray) -> None:
-        super().set_params(params)
-        if self.learn_sigma:
-            self._sigma_exp = np.exp(params).flatten()
-
-    def get_params(self) -> np.ndarray:
+    @property
+    def params(self) -> np.ndarray:
         params = np.log(np.array(self._sigma_exp)) if self.learn_sigma else []
         return params
 
-    def get_true_params(self) -> np.ndarray:
-        return np.exp(self.get_params())
+    @params.setter
+    def params(self, params: np.ndarray) -> None:
+        self._check_params_are_valid(params)
+        if self.learn_sigma:
+            self._sigma_exp = np.exp(params).flatten()
+
+    @property
+    def true_params(self) -> np.ndarray:
+        return np.exp(self.params)
 
     def gradients(self, x: np.ndarray) -> List[np.ndarray]:
         grads = []

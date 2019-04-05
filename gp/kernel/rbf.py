@@ -9,8 +9,8 @@ from .kernel import Kernel
 class RBF(Kernel):
     def __init__(self, sigma: float, gamma: float, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
-        nparams = 2 if self.learn_sigma else 1
-        super().__init__(num_params=nparams)
+        num_params = 2 if self.learn_sigma else 1
+        super().__init__(num_params=num_params)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
 
@@ -20,21 +20,24 @@ class RBF(Kernel):
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.square(dist))
         return kx1x2
 
-    def set_params(self, params: np.ndarray) -> None:
-        super().set_params(params)
-        if self.learn_sigma:
-            self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
-        else:
-            self._gamma_exp = np.exp(params).copy().flatten()
-
-    def get_params(self) -> np.ndarray:
+    @property
+    def params(self) -> np.ndarray:
         if self.learn_sigma:
             return np.log(np.array([self._sigma_exp, self._gamma_exp]))
         else:
             return np.log(np.array(self._gamma_exp))
 
-    def get_true_params(self) -> np.ndarray:
-        return np.exp(self.get_params())
+    @params.setter
+    def params(self, params: np.ndarray) -> None:
+        self._check_params_are_valid(params)
+        if self.learn_sigma:
+            self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
+        else:
+            self._gamma_exp = np.exp(params).copy().flatten()
+
+    @property
+    def true_params(self) -> np.ndarray:
+        return np.exp(self.params)
 
     def gradients(self, x: np.ndarray) -> List[np.ndarray]:
         dist = distance_matrix(x, x)

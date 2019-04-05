@@ -7,17 +7,17 @@ from .gp import GP
 
 
 class GPLVM(GP):
-    def __init__(self, y: np.ndarray, kern: Kernel = None,
+    def __init__(self, y: np.ndarray, kernel: Kernel = None,
                  initialise_by_pca: bool = False) -> None:
-        if kern is None:
-            kern = RBF(-1, -1)
+        if kernel is None:
+            kernel = RBF(-1, -1)
         latent_dim = 2
         if initialise_by_pca:
             pca = PCA(latent_dim)
             x = pca.fit_transform(y)
         else:
             x = np.random.normal(0, 1, size=(y.shape[0], latent_dim))
-        super().__init__(x, y, kern=kern)
+        super().__init__(x, y, kernel=kernel)
 
     def log_joint(self, xx: np.ndarray, n: int) -> float:
         """The log joint: log p(y,x)=log p(y|x) + log p(x). We find MAP solution wrt x.
@@ -35,7 +35,7 @@ class GPLVM(GP):
         self.x[n] = xx
         self.update()
         self.update_grad()
-        k_grads = [self.kern.gradients_wrt_data(self.x, n, dim) for dim in range(self.x_dim)]
+        k_grads = [self.kernel.gradients_wrt_data(self.x, n, dim) for dim in range(self.x_dim)]
         grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads - xx
 
