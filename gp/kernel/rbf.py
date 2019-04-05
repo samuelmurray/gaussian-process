@@ -10,7 +10,7 @@ class RBF(Kernel):
     def __init__(self, sigma: float, gamma: float, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
         nparams = 2 if self.learn_sigma else 1
-        super().__init__(nparams=nparams)
+        super().__init__(num_params=nparams)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
 

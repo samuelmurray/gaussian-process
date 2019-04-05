@@ -9,7 +9,7 @@ from .kernel import Kernel
 class Exponential(Kernel):
     def __init__(self, sigma: float, gamma: float, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
-        super().__init__(nparams=2)
+        super().__init__(num_params=2)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
 

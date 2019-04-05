@@ -9,8 +9,8 @@ class Kernel(abc.ABC):
     Base class for all kernels
     """
 
-    def __init__(self, nparams: int) -> None:
-        self._nparams = nparams
+    def __init__(self, num_params: int) -> None:
+        self._num_params = num_params
 
     @abc.abstractmethod
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
@@ -44,4 +44,4 @@ class Kernel(abc.ABC):
 
     @property
     def num_params(self) -> int:
-        return self._nparams
+        return self._num_params
