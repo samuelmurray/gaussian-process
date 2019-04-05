@@ -27,7 +27,7 @@ class GPPlotter:
         mean, cov, log_likelihood = self.gp.posterior(self.xs)
         var = np.diag(cov).reshape(-1, 1)
         std = np.sqrt(var)  # FIXME: In some cases var will be small negative, gives RuntimeWarning
-        params = self.gp.get_true_params()
+        params = self.gp.true_params
         plt.cla()
         plt.plot(self.xs, mean)
         plt.plot(self.xs, mean + std, 'k')
