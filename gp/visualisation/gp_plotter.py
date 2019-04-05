@@ -1,3 +1,5 @@
+from typing import Callable
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -5,7 +7,7 @@ from gp.model.gp import GP
 
 
 class GP_Plotter:
-    def __init__(self, gp: GP, func=None) -> None:
+    def __init__(self, gp: GP, func: Callable[[np.ndarray], np.ndarray] = None) -> None:
         self.func = func
         self.gp = gp
         self.fig, self.ax = plt.subplots()
