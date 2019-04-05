@@ -8,8 +8,8 @@ from .kernel import Kernel
 class Linear(Kernel):
     def __init__(self, sigma: float, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
-        nparams = 1 if self.learn_sigma else 0
-        super().__init__(num_params=nparams)
+        num_params = 1 if self.learn_sigma else 0
+        super().__init__(num_params=num_params)
         self._sigma_exp = np.exp(sigma)
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
