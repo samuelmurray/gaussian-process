@@ -30,8 +30,9 @@ class Kernel(abc.ABC):
     def get_params(self) -> np.ndarray:
         raise NotImplementedError
 
+    @property
     @abc.abstractmethod
-    def get_true_params(self) -> np.ndarray:
+    def true_params(self) -> np.ndarray:
         raise NotImplementedError
 
     @abc.abstractmethod

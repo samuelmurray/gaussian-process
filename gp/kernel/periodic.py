@@ -37,7 +37,8 @@ class Periodic(Kernel):
         else:
             return np.log(np.array([self._gamma_exp, self._period_exp]))
 
-    def get_true_params(self) -> np.ndarray:
+    @property
+    def true_params(self) -> np.ndarray:
         return np.exp(self.get_params())
 
     def gradients(self, x: np.ndarray) -> List[np.ndarray]:

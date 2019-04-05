@@ -57,7 +57,7 @@ class GP:
         return np.hstack((self.kernel.get_params(), np.log(self.beta_exp)))
 
     def get_true_params(self) -> np.ndarray:
-        return np.hstack((self.kernel.get_true_params(), self.beta_exp))
+        return np.hstack((self.kernel.true_params, self.beta_exp))
 
     def posterior(self, xs: np.ndarray) -> Tuple[np.ndarray, np.ndarray, float]:
         k_xs_x = self.kernel(xs, self.x)
