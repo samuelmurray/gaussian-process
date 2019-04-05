@@ -16,7 +16,7 @@ class Linear(Kernel):
         kx1x2 = self._sigma_exp * prod
         return kx1x2
 
-    def set_params(self, params) -> None:
+    def set_params(self, params: np.ndarray) -> None:
         super().set_params(params)
         if self.learn_sigma:
             self._sigma_exp = np.exp(params).flatten()

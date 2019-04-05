@@ -32,7 +32,7 @@ class GP:
         k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.n)))
         self.aa_k_inv = np.matmul(self.a, self.a.T) - self.ydim * k_inv
 
-    def set_params(self, params) -> None:
+    def set_params(self, params: np.ndarray) -> None:
         assert params.size == self.nparams
         self.beta_exp = np.exp(params[-1])
         self.kern.set_params(params[:-1])

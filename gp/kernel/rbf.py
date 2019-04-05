@@ -18,7 +18,7 @@ class RBF(Kernel):
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.square(dist))
         return kx1x2
 
-    def set_params(self, params) -> None:
+    def set_params(self, params: np.ndarray) -> None:
         super().set_params(params)
         if self.learn_sigma:
             self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
