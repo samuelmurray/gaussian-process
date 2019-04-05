@@ -23,15 +23,17 @@ class GP:
         K = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
         return K
 
+    def _compute_L(self) -> np.ndarray:
+        try:
+            L = np.linalg.cholesky(self.K)
+        except np.linalg.LinAlgError:
+            L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.num_data))
+        return L
+
     def update(self) -> None:
         # Page 19 in GPML
         self.K = self._compute_K()
-        try:
-            self.L = np.linalg.cholesky(self.K)
-        except np.linalg.LinAlgError:
-            # print(f"K is not a PSD matrix! :(")  # TODO: How to handle this?
-            # print(f"Maybe because of beta={self.beta_exp}?")
-            self.L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.num_data))
+        self.L = self._compute_L()
         self.a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
 
     def update_grad(self) -> None:
