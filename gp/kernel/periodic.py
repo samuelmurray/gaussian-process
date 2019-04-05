@@ -11,7 +11,7 @@ class Periodic(Kernel):
         self._gamma_exp = np.exp(gamma)
         self._period_exp = np.exp(period)
 
-    def __call__(self, x1, x2):
+    def __call__(self, x1: np.ndarray, x2: np.ndarray):
         super().__call__(x1, x2)
         dist = distance_matrix(x1, x2)
         abs_dist = np.abs(dist)
@@ -29,7 +29,7 @@ class Periodic(Kernel):
     def get_true_params(self):
         return np.exp(self.get_params())
 
-    def gradients(self, x):
+    def gradients(self, x: np.ndarray):
         dist = distance_matrix(x, x)
         abs_dist = np.abs(dist)
         R = np.square(np.sin(abs_dist / self._period_exp))

@@ -34,7 +34,7 @@ class RBF(Kernel):
     def get_true_params(self):
         return np.exp(self.get_params())
 
-    def gradients(self, x):
+    def gradients(self, x: np.ndarray):
         dist = distance_matrix(x, x)
         square_dist = np.square(dist)
         grads = []
@@ -48,7 +48,7 @@ class RBF(Kernel):
         grads.append(dgamma)
         return grads
 
-    def gradients_wrt_data(self, x, n=None, dim=None):
+    def gradients_wrt_data(self, x: np.ndarray, n=None, dim=None):
         """Compute the derivative matrix of the kernel wrt the data.
         This returns a list of matrices: each matrix is NxN, and there are N*D of them!"""
         N, D = x.shape

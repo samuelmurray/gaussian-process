@@ -1,5 +1,7 @@
 from abc import ABC
 
+import numpy as np
+
 
 class Kernel(ABC):
     """
@@ -9,7 +11,7 @@ class Kernel(ABC):
     def __init__(self, nparams) -> None:
         self._nparams = nparams
 
-    def __call__(self, x1, x2):
+    def __call__(self, x1: np.ndarray, x2: np.ndarray):
         assert x1.shape[1] == x2.shape[1], "Vectors must be of matching dimension"
 
     def set_params(self, params) -> None:

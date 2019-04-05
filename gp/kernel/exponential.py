@@ -10,7 +10,7 @@ class Exponential(Kernel):
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
 
-    def __call__(self, x1, x2):
+    def __call__(self, x1: np.ndarray, x2: np.ndarray):
         super().__call__(x1, x2)
         dist = distance_matrix(x1, x2)
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.abs(dist))
@@ -26,7 +26,7 @@ class Exponential(Kernel):
     def get_true_params(self):
         return np.exp(self.get_params())
 
-    def gradients(self, x):
+    def gradients(self, x: np.ndarray):
         dist = distance_matrix(x, x)
         abs_dist = np.abs(dist)
         dsigma = self._sigma_exp * np.exp(-self._gamma_exp * abs_dist)

@@ -10,7 +10,7 @@ class Linear(Kernel):
         super().__init__(nparams=nparams)
         self._sigma_exp = np.exp(sigma)
 
-    def __call__(self, x1, x2):
+    def __call__(self, x1: np.ndarray, x2: np.ndarray):
         super().__call__(x1, x2)
         prod = np.dot(x1, x2.T)
         kx1x2 = self._sigma_exp * prod
@@ -28,7 +28,7 @@ class Linear(Kernel):
     def get_true_params(self):
         return np.exp(self.get_params())
 
-    def gradients(self, x):
+    def gradients(self, x: np.ndarray):
         grads = []
         if self.learn_sigma:
             prod = np.dot(x, x.T)
@@ -36,5 +36,5 @@ class Linear(Kernel):
             grads.append(dsigma)
         return grads
 
-    def gradients_wrt_data(self, x, n=None, dim=None):
+    def gradients_wrt_data(self, x: np.ndarray, n=None, dim=None):
         raise NotImplementedError

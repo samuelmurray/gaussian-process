@@ -49,7 +49,7 @@ class GP_Plotter:
         self.gp.optimise_hyperparameters()
         self.plot_posterior()
 
-    def add_point(self, x, y=None) -> None:
+    def add_point(self, x: np.ndarray, y: np.ndarray = None) -> None:
         if y is None:
             y = self.func(x)
         self.gp.add_point(x, y)

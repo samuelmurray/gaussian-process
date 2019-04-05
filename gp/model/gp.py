@@ -43,7 +43,7 @@ class GP:
     def get_true_params(self):
         return np.hstack((self.kern.get_true_params(), self.beta_exp))
 
-    def posterior(self, xs):
+    def posterior(self, xs: np.ndarray):
         k_xs_x = self.kern(xs, self.x)
         k_xs_xs = self.kern(xs, xs)
         mean = np.matmul(k_xs_x, self.a)
@@ -86,7 +86,7 @@ class GP:
         final_params = params if loss < loss_restart else params_restart
         _ = self.log_likelihood(final_params)
 
-    def add_point(self, x, y) -> None:
+    def add_point(self, x: np.ndarray, y: np.ndarray) -> None:
         x = np.array(x).reshape(-1, self.xdim)
         y = np.array(y).reshape(-1, self.ydim)
         assert x.shape[0] == y.shape[
@@ -96,7 +96,7 @@ class GP:
         self.update()
 
     @staticmethod
-    def initialise_data(x, y):
+    def initialise_data(x: np.ndarray, y: np.ndarray):
         both_are_none = x is None and y is None
         neither_are_none = x is not None and y is not None
         assert both_are_none or neither_are_none, "Provide both x and y or neither"
