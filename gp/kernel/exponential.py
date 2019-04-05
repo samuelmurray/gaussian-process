@@ -14,7 +14,7 @@ class Exponential(Kernel):
         self._gamma_exp = np.exp(gamma)
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
-        super().__call__(x1, x2)
+        self._check_input_is_valid(x1, x2)
         dist = distance_matrix(x1, x2)
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.abs(dist))
         return kx1x2

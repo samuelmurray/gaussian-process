@@ -16,7 +16,7 @@ class Periodic(Kernel):
         self._period_exp = np.exp(period)
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
-        super().__call__(x1, x2)
+        self._check_input_is_valid(x1, x2)
         dist = distance_matrix(x1, x2)
         abs_dist = np.abs(dist)
         R = np.square(np.sin(abs_dist / self._period_exp))
