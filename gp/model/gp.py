@@ -13,10 +13,10 @@ class GP:
         self.kern = RBF(-1, -1) if kern is None else kern
         self.x, self.y = self.initialise_data(x, y)
         self.beta_exp = 50
-        self.K = None
-        self.L = None
-        self.a = None
-        self.aa_k_inv = None
+        self.K: np.ndarray
+        self.L: np.ndarray
+        self.a: np.ndarray
+        self.aa_k_inv: np.ndarray
         self.update()
 
     def update(self) -> None:
