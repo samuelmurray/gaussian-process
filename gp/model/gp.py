@@ -35,7 +35,7 @@ class GP:
         self.aa_k_inv = np.matmul(self.a, self.a.T) - self.y_dim * k_inv
 
     def set_params(self, params: np.ndarray) -> None:
-        assert params.size == self.nparams
+        assert params.size == self.num_params
         self.beta_exp = np.exp(params[-1])
         self.kern.set_params(params[:-1])
 
@@ -82,7 +82,7 @@ class GP:
     def optimise_hyperparameters(self) -> None:
         params, loss, *_ = fmin_cg(self.loss, x0=np.hstack((self.get_params())),
                                    fprime=self.loss_grad, disp=False, full_output=True)
-        params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.nparams),
+        params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.num_params),
                                                    fprime=self.loss_grad, disp=False,
                                                    full_output=True)
         final_params = params if loss < loss_restart else params_restart
@@ -124,7 +124,7 @@ class GP:
         return self.y.shape[0]
 
     @property
-    def nparams(self) -> int:
+    def num_params(self) -> int:
         return self.kern.nparams + 1
 
     @property
