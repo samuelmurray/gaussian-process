@@ -10,7 +10,7 @@ class Linear(Kernel):
         super().__init__(nparams=nparams)
         self._sigma_exp = np.exp(sigma)
 
-    def __call__(self, x1: np.ndarray, x2: np.ndarray):
+    def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
         super().__call__(x1, x2)
         prod = np.dot(x1, x2.T)
         kx1x2 = self._sigma_exp * prod

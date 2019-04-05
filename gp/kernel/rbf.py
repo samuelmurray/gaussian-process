@@ -12,7 +12,7 @@ class RBF(Kernel):
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
 
-    def __call__(self, x1, x2):
+    def __call__(self, x1, x2) -> np.ndarray:
         super().__call__(x1, x2)
         dist = distance_matrix(x1, x2)
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.square(dist))
@@ -25,13 +25,13 @@ class RBF(Kernel):
         else:
             self._gamma_exp = np.exp(params).copy().flatten()
 
-    def get_params(self):
+    def get_params(self) -> np.ndarray:
         if self.learn_sigma:
             return np.log(np.array([self._sigma_exp, self._gamma_exp]))
         else:
             return np.log(np.array(self._gamma_exp))
 
-    def get_true_params(self):
+    def get_true_params(self) -> np.ndarray:
         return np.exp(self.get_params())
 
     def gradients(self, x: np.ndarray):

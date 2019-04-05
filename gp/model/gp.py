@@ -37,10 +37,10 @@ class GP:
         self.beta_exp = np.exp(params[-1])
         self.kern.set_params(params[:-1])
 
-    def get_params(self):
+    def get_params(self) -> np.ndarray:
         return np.hstack((self.kern.get_params(), np.log(self.beta_exp)))
 
-    def get_true_params(self):
+    def get_true_params(self) -> np.ndarray:
         return np.hstack((self.kern.get_true_params(), self.beta_exp))
 
     def posterior(self, xs: np.ndarray):
@@ -61,7 +61,7 @@ class GP:
                           - self.ydim * self.n * self.half_ln2pi)
         return log_likelihood
 
-    def log_likelihood_grad(self, params=None):
+    def log_likelihood_grad(self, params=None) -> np.ndarray:
         if params is not None:
             self.set_params(params)
         self.update()
@@ -74,7 +74,7 @@ class GP:
     def loss(self, params=None):
         return -self.log_likelihood(params)
 
-    def loss_grad(self, params=None):
+    def loss_grad(self, params=None) -> np.ndarray:
         return -self.log_likelihood_grad(params)
 
     def optimise_hyperparameters(self) -> None:
