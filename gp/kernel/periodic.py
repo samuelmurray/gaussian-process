@@ -25,7 +25,7 @@ class Periodic(Kernel):
         return kx1x2
 
     def set_params(self, params: np.ndarray) -> None:
-        super().set_params(params)
+        self._check_params_are_valid(params)
         if self.learn_sigma:
             self._sigma_exp, self._gamma_exp, self._period_exp = np.exp(params).copy().flatten()
         else:
