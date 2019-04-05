@@ -30,11 +30,15 @@ class GP:
             L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.num_data))
         return L
 
+    def _compute_a(self) -> np.ndarray:
+        a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
+        return a
+
     def update(self) -> None:
         # Page 19 in GPML
         self.K = self._compute_K()
         self.L = self._compute_L()
-        self.a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
+        self.a = self._compute_a()
 
     def update_grad(self) -> None:
         k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.num_data)))
