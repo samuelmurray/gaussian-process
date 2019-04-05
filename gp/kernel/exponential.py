@@ -7,7 +7,8 @@ from .kernel import Kernel
 
 
 class Exponential(Kernel):
-    def __init__(self, sigma: float, gamma: float) -> None:
+    def __init__(self, sigma: float, gamma: float, learn_sigma: bool = True) -> None:
+        self.learn_sigma = learn_sigma
         super().__init__(nparams=2)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
@@ -20,10 +21,16 @@ class Exponential(Kernel):
 
     def set_params(self, params: np.ndarray) -> None:
         super().set_params(params)
-        self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
+        if self.learn_sigma:
+            self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
+        else:
+            self._gamma_exp = np.exp(params).copy().flatten()
 
     def get_params(self) -> np.ndarray:
-        return np.log(np.array([self._sigma_exp, self._gamma_exp]))
+        if self.learn_sigma:
+            return np.log(np.array([self._sigma_exp, self._gamma_exp]))
+        else:
+            return np.log(np.array([self._gamma_exp]))
 
     def get_true_params(self) -> np.ndarray:
         return np.exp(self.get_params())
@@ -31,12 +38,16 @@ class Exponential(Kernel):
     def gradients(self, x: np.ndarray) -> List[np.ndarray]:
         dist = distance_matrix(x, x)
         abs_dist = np.abs(dist)
-        dsigma = self._sigma_exp * np.exp(-self._gamma_exp * abs_dist)
+        grads = []
+        if self.learn_sigma:
+            dsigma = self._sigma_exp * np.exp(-self._gamma_exp * abs_dist)
+            grads.append(dsigma)
         dgamma = (-self._sigma_exp
                   * self._gamma_exp
                   * abs_dist
                   * np.exp(-self._gamma_exp * abs_dist))
-        return dsigma, dgamma
+        grads.append(dgamma)
+        return grads
 
     def gradients_wrt_data(self, x, n: int = None, dim=None):
         raise NotImplementedError
