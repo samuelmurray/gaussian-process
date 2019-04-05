@@ -18,7 +18,7 @@ class GPPlotter:
     def plot_prior_sample(self, nsamples: int) -> None:
         n = self.xs.shape[0]
         mean = np.zeros(n)
-        cov = self.gp.kern(self.xs, self.xs)
+        cov = self.gp.kernel(self.xs, self.xs)
         f = np.random.multivariate_normal(mean, cov, size=nsamples).T
         plt.plot(self.xs, f)
         plt.show()
