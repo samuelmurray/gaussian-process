@@ -4,7 +4,7 @@ from .kernel import Kernel
 
 
 class Linear(Kernel):
-    def __init__(self, sigma, learn_sigma=True) -> None:
+    def __init__(self, sigma, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
         nparams = 1 if self.learn_sigma else 0
         super().__init__(nparams=nparams)
