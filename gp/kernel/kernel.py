@@ -39,7 +39,7 @@ class Kernel(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim: int = None) -> np.ndarray:
+    def gradients_wrt_data(self, x: np.ndarray, n: int, dim: int) -> np.ndarray:
         raise NotImplementedError
 
     @property

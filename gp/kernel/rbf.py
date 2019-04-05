@@ -50,27 +50,12 @@ class RBF(Kernel):
         grads.append(dgamma)
         return grads
 
-    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim: int = None) -> np.ndarray:
-        """Compute the derivative matrix of the kernel wrt the data.
-        This returns a list of matrices: each matrix is NxN, and there are N*D of them!"""
+    def gradients_wrt_data(self, x: np.ndarray, n: int, dim: int) -> np.ndarray:
+        """Compute the derivative matrix of the kernel wrt the data"""
         N, D = x.shape
         dist = distance_matrix(x, x)
         kxx = self._sigma_exp * np.exp(-self._gamma_exp * np.square(dist))
-
-        if (n is None) and (dim is None):  # calculate all gradients
-            dkdx_list = []
-            for n_iter in range(N):
-                for d_iter in range(D):
-                    dkdx = np.zeros((N, N))
-                    dkdx[n_iter, :] = (-2
-                                       * self._gamma_exp
-                                       * (x[n_iter, d_iter] - x[:, d_iter])
-                                       * kxx[n_iter, :])
-                    dkdx[:, n_iter] = dkdx[n_iter, :]
-                    dkdx_list.append(dkdx.copy())
-            return dkdx_list
-        else:
-            dkdx = np.zeros((N, N))
-            dkdx[n, :] = -2 * self._gamma_exp * (x[n, dim] - x[:, dim]) * kxx[n, :]
-            dkdx[:, n] = dkdx[n, :]
-            return dkdx
+        dkdx = np.zeros((N, N))
+        dkdx[n, :] = -2 * self._gamma_exp * (x[n, dim] - x[:, dim]) * kxx[n, :]
+        dkdx[:, n] = dkdx[n, :]
+        return dkdx
