@@ -89,7 +89,7 @@ class GP:
         _ = self.log_likelihood(final_params)
 
     def add_point(self, x: np.ndarray, y: np.ndarray) -> None:
-        x = np.array(x).reshape(-1, self.xdim)
+        x = np.array(x).reshape(-1, self.x_dim)
         y = np.array(y).reshape(-1, self.ydim)
         assert x.shape[0] == y.shape[
             0], f"First dim of x {x.shape} not matching that of y {y.shape}"
@@ -112,7 +112,7 @@ class GP:
         return x, y
 
     @property
-    def xdim(self) -> int:
+    def x_dim(self) -> int:
         return self.x.shape[1]
 
     @property

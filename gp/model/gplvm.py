@@ -26,7 +26,7 @@ class GPLVM(GP):
         self.x[n] = xx
         self.update()
         log_likelihood = self.log_likelihood()
-        log_prior = - 0.5 * np.sum(np.square(self.x)) - self.xdim * self.n * self.half_ln2pi
+        log_prior = - 0.5 * np.sum(np.square(self.x)) - self.x_dim * self.n * self.half_ln2pi
         return log_likelihood + log_prior
 
     def log_joint_grad(self, xx: np.ndarray, n: int) -> np.ndarray:
@@ -34,7 +34,7 @@ class GPLVM(GP):
         self.x[n] = xx
         self.update()
         self.update_grad()
-        k_grads = [self.kern.gradients_wrt_data(self.x, n, dim) for dim in range(self.xdim)]
+        k_grads = [self.kern.gradients_wrt_data(self.x, n, dim) for dim in range(self.x_dim)]
         grads = np.array([0.5 * np.trace(np.dot(self.aa_k_inv, k_grad)) for k_grad in k_grads])
         return grads - xx
 
@@ -69,4 +69,4 @@ class GPLVM(GP):
 
     @property
     def latent_dim(self) -> int:
-        return self.xdim
+        return self.x_dim
