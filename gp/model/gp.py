@@ -32,7 +32,7 @@ class GP:
 
     def update_grad(self) -> None:
         k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.n)))
-        self.aa_k_inv = np.matmul(self.a, self.a.T) - self.ydim * k_inv
+        self.aa_k_inv = np.matmul(self.a, self.a.T) - self.y_dim * k_inv
 
     def set_params(self, params: np.ndarray) -> None:
         assert params.size == self.nparams
@@ -59,8 +59,8 @@ class GP:
             self.set_params(params)
         self.update()
         log_likelihood = (- 0.5 * np.trace(np.dot(self.y.T, self.a))
-                          - self.ydim * np.sum(np.log(np.diag(self.L)))
-                          - self.ydim * self.n * self.half_ln2pi)
+                          - self.y_dim * np.sum(np.log(np.diag(self.L)))
+                          - self.y_dim * self.n * self.half_ln2pi)
         return log_likelihood
 
     def log_likelihood_grad(self, params: np.ndarray = None) -> np.ndarray:
@@ -90,7 +90,7 @@ class GP:
 
     def add_point(self, x: np.ndarray, y: np.ndarray) -> None:
         x = np.array(x).reshape(-1, self.x_dim)
-        y = np.array(y).reshape(-1, self.ydim)
+        y = np.array(y).reshape(-1, self.y_dim)
         assert x.shape[0] == y.shape[
             0], f"First dim of x {x.shape} not matching that of y {y.shape}"
         self.x = np.vstack((self.x, x))
@@ -116,7 +116,7 @@ class GP:
         return self.x.shape[1]
 
     @property
-    def ydim(self) -> int:
+    def y_dim(self) -> int:
         return self.y.shape[1]
 
     @property
