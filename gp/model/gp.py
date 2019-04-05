@@ -13,11 +13,10 @@ class GP:
         self.kern = RBF(-1, -1) if kern is None else kern
         self.x, self.y = self.initialise_data(x, y)
         self.beta_exp = 50
-        self.K: np.ndarray
-        self.L: np.ndarray
-        self.a: np.ndarray
-        self.aa_k_inv: np.ndarray
-        self.update()
+        self.K = self._compute_K()
+        self.L = self._compute_L()
+        self.a = self._compute_a()
+        self.aa_k_inv = self._compute_aa_k_inv()
 
     def _compute_K(self) -> np.ndarray:
         K = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
