@@ -20,19 +20,20 @@ class RBF(Kernel):
         kx1x2 = self._sigma_exp * np.exp(-self._gamma_exp * np.square(dist))
         return kx1x2
 
-    def set_params(self, params: np.ndarray) -> None:
-        self._check_params_are_valid(params)
-        if self.learn_sigma:
-            self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
-        else:
-            self._gamma_exp = np.exp(params).copy().flatten()
-
     @property
     def params(self) -> np.ndarray:
         if self.learn_sigma:
             return np.log(np.array([self._sigma_exp, self._gamma_exp]))
         else:
             return np.log(np.array(self._gamma_exp))
+
+    @params.setter
+    def params(self, params: np.ndarray) -> None:
+        self._check_params_are_valid(params)
+        if self.learn_sigma:
+            self._sigma_exp, self._gamma_exp = np.exp(params).copy().flatten()
+        else:
+            self._gamma_exp = np.exp(params).copy().flatten()
 
     @property
     def true_params(self) -> np.ndarray:

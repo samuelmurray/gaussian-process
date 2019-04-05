@@ -18,15 +18,16 @@ class Linear(Kernel):
         kx1x2 = self._sigma_exp * prod
         return kx1x2
 
-    def set_params(self, params: np.ndarray) -> None:
-        self._check_params_are_valid(params)
-        if self.learn_sigma:
-            self._sigma_exp = np.exp(params).flatten()
-
     @property
     def params(self) -> np.ndarray:
         params = np.log(np.array(self._sigma_exp)) if self.learn_sigma else []
         return params
+
+    @params.setter
+    def params(self, params: np.ndarray) -> None:
+        self._check_params_are_valid(params)
+        if self.learn_sigma:
+            self._sigma_exp = np.exp(params).flatten()
 
     @property
     def true_params(self) -> np.ndarray:
