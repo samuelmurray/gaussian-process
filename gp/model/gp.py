@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import numpy as np
 from scipy.optimize import fmin_cg
 
@@ -43,7 +45,7 @@ class GP:
     def get_true_params(self) -> np.ndarray:
         return np.hstack((self.kern.get_true_params(), self.beta_exp))
 
-    def posterior(self, xs: np.ndarray):
+    def posterior(self, xs: np.ndarray) -> Tuple[np.ndarray, np.ndarray, float]:
         k_xs_x = self.kern(xs, self.x)
         k_xs_xs = self.kern(xs, xs)
         mean = np.matmul(k_xs_x, self.a)
