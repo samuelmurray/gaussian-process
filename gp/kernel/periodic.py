@@ -45,5 +45,5 @@ class Periodic(Kernel):
                    / self._period_exp)
         return dsigma, dgamma, dperiod
 
-    def gradients_wrt_data(self, x, n=None, dim=None):
+    def gradients_wrt_data(self, x, n: int = None, dim=None):
         raise NotImplementedError

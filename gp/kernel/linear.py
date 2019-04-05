@@ -36,5 +36,5 @@ class Linear(Kernel):
             grads.append(dsigma)
         return grads
 
-    def gradients_wrt_data(self, x: np.ndarray, n=None, dim=None):
+    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim=None):
         raise NotImplementedError

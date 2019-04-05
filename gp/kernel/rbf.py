@@ -48,7 +48,7 @@ class RBF(Kernel):
         grads.append(dgamma)
         return grads
 
-    def gradients_wrt_data(self, x: np.ndarray, n=None, dim=None):
+    def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim=None):
         """Compute the derivative matrix of the kernel wrt the data.
         This returns a list of matrices: each matrix is NxN, and there are N*D of them!"""
         N, D = x.shape
