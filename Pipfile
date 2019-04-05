@@ -11,5 +11,6 @@ gp = {editable = true,path = "."}
 
 [dev-packages]
 pytest = "*"
+pytest-codestyle = "*"
 pytest-flakes = "*"
-pytest-pep8 = "*"
+pytest-mypy = "*"
