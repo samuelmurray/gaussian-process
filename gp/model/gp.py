@@ -110,21 +110,21 @@ class GP:
         return x, y
 
     @property
-    def xdim(self):
+    def xdim(self) -> int:
         return self.x.shape[1]
 
     @property
-    def ydim(self):
+    def ydim(self) -> int:
         return self.y.shape[1]
 
     @property
-    def n(self):
+    def n(self) -> int:
         return self.y.shape[0]
 
     @property
-    def nparams(self):
+    def nparams(self) -> int:
         return self.kern.nparams + 1
 
     @property
-    def half_ln2pi(self):
+    def half_ln2pi(self) -> float:
         return self._half_ln2pi

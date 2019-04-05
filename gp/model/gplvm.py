@@ -67,5 +67,5 @@ class GPLVM(GP):
             self.x = xtemp.copy()
 
     @property
-    def latent_dim(self):
+    def latent_dim(self) -> int:
         return self.xdim

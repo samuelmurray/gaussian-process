@@ -31,5 +31,5 @@ class Kernel(ABC):
         raise NotImplementedError
 
     @property
-    def nparams(self):
+    def nparams(self) -> int:
         return self._nparams
