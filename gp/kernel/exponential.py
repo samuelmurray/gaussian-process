@@ -1,3 +1,5 @@
+from typing import List
+
 import numpy as np
 from scipy.spatial import distance_matrix
 
@@ -26,7 +28,7 @@ class Exponential(Kernel):
     def get_true_params(self) -> np.ndarray:
         return np.exp(self.get_params())
 
-    def gradients(self, x: np.ndarray):
+    def gradients(self, x: np.ndarray) -> List[np.ndarray]:
         dist = distance_matrix(x, x)
         abs_dist = np.abs(dist)
         dsigma = self._sigma_exp * np.exp(-self._gamma_exp * abs_dist)

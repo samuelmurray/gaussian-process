@@ -1,3 +1,5 @@
+from typing import List
+
 import numpy as np
 
 from .kernel import Kernel
@@ -28,7 +30,7 @@ class Linear(Kernel):
     def get_true_params(self) -> np.ndarray:
         return np.exp(self.get_params())
 
-    def gradients(self, x: np.ndarray):
+    def gradients(self, x: np.ndarray) -> List[np.ndarray]:
         grads = []
         if self.learn_sigma:
             prod = np.dot(x, x.T)
