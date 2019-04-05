@@ -12,11 +12,13 @@ class Kernel(ABC):
         self._nparams = nparams
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray):
-        assert x1.shape[1] == x2.shape[1], "Vectors must be of matching dimension"
+        if x1.shape[1] != x2.shape[1]:
+            raise ValueError(f"Vectors must be of matching dimension, "
+                             f"but x1.shape = {x1.shape} and x2.shape = {x2.shape}")
 
     def set_params(self, params: np.ndarray) -> None:
-        assert params.size == self.nparams, \
-            f"Provided {params.size} params; must be {self.nparams}"
+        if params.size != self.nparams:
+            raise ValueError(f"Provided {params.size} params; must be {self.nparams}")
 
     def get_params(self):
         raise NotImplementedError
