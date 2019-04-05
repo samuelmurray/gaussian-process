@@ -97,8 +97,8 @@ class GP:
         return -self.log_likelihood_grad(params)
 
     def optimise_hyperparameters(self) -> None:
-        params, loss, *_ = fmin_cg(self.loss, x0=np.hstack((self.params)),
-                                   fprime=self.loss_grad, disp=False, full_output=True)
+        params, loss, *_ = fmin_cg(self.loss, x0=np.hstack(self.params), fprime=self.loss_grad,
+                                   disp=False, full_output=True)
         params_restart, loss_restart, *_ = fmin_cg(self.loss, x0=-np.ones(self.num_params),
                                                    fprime=self.loss_grad, disp=False,
                                                    full_output=True)
