@@ -34,6 +34,11 @@ class GP:
         a = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y))
         return a
 
+    def _compute_aa_k_inv(self) -> np.ndarray:
+        k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.num_data)))
+        aa_k_inv = np.matmul(self.a, self.a.T) - self.y_dim * k_inv
+        return aa_k_inv
+
     def update(self) -> None:
         # Page 19 in GPML
         self.K = self._compute_K()
@@ -41,8 +46,7 @@ class GP:
         self.a = self._compute_a()
 
     def update_grad(self) -> None:
-        k_inv = np.linalg.solve(self.L.T, np.linalg.solve(self.L, np.eye(self.num_data)))
-        self.aa_k_inv = np.matmul(self.a, self.a.T) - self.y_dim * k_inv
+        self.aa_k_inv = self._compute_aa_k_inv()
 
     def set_params(self, params: np.ndarray) -> None:
         assert params.size == self.num_params
