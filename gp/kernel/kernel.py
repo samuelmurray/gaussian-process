@@ -1,10 +1,10 @@
-from abc import ABC
+import abc
 from typing import List
 
 import numpy as np
 
 
-class Kernel(ABC):
+class Kernel(abc.ABC):
     """
     Base class for all kernels
     """
@@ -12,6 +12,7 @@ class Kernel(ABC):
     def __init__(self, nparams: int) -> None:
         self._nparams = nparams
 
+    @abc.abstractmethod
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
         raise NotImplementedError
 
@@ -25,15 +26,19 @@ class Kernel(ABC):
         if params.size != self.nparams:
             raise ValueError(f"Provided {params.size} params; must be {self.nparams}")
 
+    @abc.abstractmethod
     def get_params(self) -> np.ndarray:
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_true_params(self) -> np.ndarray:
         raise NotImplementedError
 
+    @abc.abstractmethod
     def gradients(self, x) -> List[np.ndarray]:
         raise NotImplementedError
 
+    @abc.abstractmethod
     def gradients_wrt_data(self, x: np.ndarray, n: int = None, dim: int = None):
         raise NotImplementedError
 
