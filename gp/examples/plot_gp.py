@@ -8,6 +8,6 @@ if __name__ == "__main__":
     func = None  # This can be changed to e.g. util.sin
     kern = RBF(-1, -1)
     gp = GP(kern=kern)
-    gplot = GPPlotter(gp, func)
-    gplot.plot_posterior()
+    plotter = GPPlotter(gp, func)
+    plotter.plot_posterior()
     plt.show()
