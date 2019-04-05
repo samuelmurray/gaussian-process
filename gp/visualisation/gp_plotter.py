@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from gp.model.gp import GP
 
 
-class GP_Plotter:
+class GPPlotter:
     def __init__(self, gp: GP, func: Callable[[np.ndarray], np.ndarray] = None) -> None:
         self.func = func
         self.gp = gp
