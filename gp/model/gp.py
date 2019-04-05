@@ -19,9 +19,13 @@ class GP:
         self.aa_k_inv: np.ndarray
         self.update()
 
+    def _compute_K(self) -> np.ndarray:
+        K = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
+        return K
+
     def update(self) -> None:
         # Page 19 in GPML
-        self.K = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
+        self.K = self._compute_K()
         try:
             self.L = np.linalg.cholesky(self.K)
         except np.linalg.LinAlgError:
