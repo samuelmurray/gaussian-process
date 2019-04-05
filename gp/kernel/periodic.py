@@ -10,7 +10,8 @@ class Periodic(Kernel):
     def __init__(self, sigma: float, gamma: float, period: float,
                  learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
-        super().__init__(num_params=3)
+        num_params = 3 if self.learn_sigma else 2
+        super().__init__(num_params=num_params)
         self._sigma_exp = np.exp(sigma)
         self._gamma_exp = np.exp(gamma)
         self._period_exp = np.exp(period)
