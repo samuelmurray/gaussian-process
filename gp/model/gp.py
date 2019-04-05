@@ -98,7 +98,7 @@ class GP:
         self.update()
 
     @staticmethod
-    def initialise_data(x: np.ndarray, y: np.ndarray):
+    def initialise_data(x: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         both_are_none = x is None and y is None
         neither_are_none = x is not None and y is not None
         assert both_are_none or neither_are_none, "Provide both x and y or neither"
