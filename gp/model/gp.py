@@ -13,20 +13,20 @@ class GP:
         self.kern = RBF(-1, -1) if kern is None else kern
         self.x, self.y = self.initialise_data(x, y)
         self.beta_exp = 50
-        self.K = self._compute_K()
+        self.k_xx = self._compute_k_xx()
         self.L = self._compute_L()
         self.a = self._compute_a()
         self.aa_k_inv = self._compute_aa_k_inv()
 
-    def _compute_K(self) -> np.ndarray:
-        K = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
-        return K
+    def _compute_k_xx(self) -> np.ndarray:
+        k_xx = self.kern(self.x, self.x) + np.eye(self.num_data) / self.beta_exp
+        return k_xx
 
     def _compute_L(self) -> np.ndarray:
         try:
-            L = np.linalg.cholesky(self.K)
+            L = np.linalg.cholesky(self.k_xx)
         except np.linalg.LinAlgError:
-            L = np.linalg.cholesky(self.K + 1e-10 * np.eye(self.num_data))
+            L = np.linalg.cholesky(self.k_xx + 1e-10 * np.eye(self.num_data))
         return L
 
     def _compute_a(self) -> np.ndarray:
@@ -40,7 +40,7 @@ class GP:
 
     def update(self) -> None:
         # Page 19 in GPML
-        self.K = self._compute_K()
+        self.k_xx = self._compute_k_xx()
         self.L = self._compute_L()
         self.a = self._compute_a()
 
