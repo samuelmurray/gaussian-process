@@ -6,7 +6,7 @@ from .kernel import Kernel
 
 
 class Linear(Kernel):
-    def __init__(self, sigma: float, learn_sigma: bool = True) -> None:
+    def __init__(self, sigma: float, *, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
         num_params = 1 if self.learn_sigma else 0
         super().__init__(num_params=num_params)

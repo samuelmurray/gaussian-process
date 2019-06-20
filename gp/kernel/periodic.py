@@ -7,7 +7,7 @@ from .kernel import Kernel
 
 
 class Periodic(Kernel):
-    def __init__(self, sigma: float, gamma: float, period: float,
+    def __init__(self, sigma: float, gamma: float, period: float, *,
                  learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
         num_params = 3 if self.learn_sigma else 2
