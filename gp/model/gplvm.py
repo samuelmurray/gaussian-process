@@ -7,7 +7,7 @@ from .gp import GP
 
 
 class GPLVM(GP):
-    def __init__(self, y: np.ndarray, kernel: Kernel = None,
+    def __init__(self, y: np.ndarray, kernel: Kernel = None, *,
                  initialise_by_pca: bool = False) -> None:
         if kernel is None:
             kernel = RBF(-1, -1)
@@ -45,7 +45,7 @@ class GPLVM(GP):
     def joint_loss_grad(self, xx: np.ndarray, n: int) -> np.ndarray:
         return -self.log_joint_grad(xx, n)
 
-    def optimise(self, n_iter: int, learn_hyperparameters: bool = True) -> None:
+    def optimise(self, n_iter: int, *, learn_hyperparameters: bool = True) -> None:
         from matplotlib import pyplot as plt
         for i in range(n_iter):
             print(f"Iteration {i}")
