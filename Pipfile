@@ -8,15 +8,15 @@ python_version = "3.7"
 
 [packages]
 gp = {editable = true,path = "."}
-numpy = "*"
-scipy = "*"
 matplotlib = "*"
+numpy = "*"
 scikit-learn = "*"
+scipy = "*"
 
 [dev-packages]
+ipython = "*"
+jupyter = "*"
 pytest = "*"
 pytest-codestyle = "*"
 pytest-flakes = "*"
 pytest-mypy = "*"
-jupyter = "*"
-ipython = "*"
