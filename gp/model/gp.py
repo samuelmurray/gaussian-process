@@ -7,7 +7,7 @@ from gp.kernel import Kernel, RBF
 
 
 class GP:
-    _half_ln2pi = 0.5 * np.log(2 * np.pi)
+    _HALF_LN2PI = 0.5 * np.log(2 * np.pi)
 
     def __init__(self, x: np.ndarray = None, y: np.ndarray = None, kernel: Kernel = None) -> None:
         self.kernel = RBF(-1, -1) if kernel is None else kernel
@@ -147,4 +147,4 @@ class GP:
 
     @property
     def half_ln2pi(self) -> float:
-        return self._half_ln2pi
+        return self._HALF_LN2PI
