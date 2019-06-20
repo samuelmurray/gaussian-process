@@ -6,28 +6,28 @@ from .kernel import Kernel
 
 
 class Linear(Kernel):
-    def __init__(self, sigma: float, *, learn_sigma: bool = True) -> None:
+    def __init__(self, log_sigma: float, *, learn_sigma: bool = True) -> None:
         self.learn_sigma = learn_sigma
         num_params = 1 if self.learn_sigma else 0
         super().__init__(num_params=num_params)
-        self._sigma_exp = np.exp(sigma)
+        self._sigma = np.exp(log_sigma)
 
     def __call__(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
         self._check_input_is_valid(x1, x2)
         prod = np.dot(x1, x2.T)
-        kx1x2 = self._sigma_exp * prod
+        kx1x2 = self._sigma * prod
         return kx1x2
 
     @property
     def params(self) -> np.ndarray:
-        params = np.log(np.array(self._sigma_exp)) if self.learn_sigma else []
+        params = np.log(np.array(self._sigma)) if self.learn_sigma else []
         return params
 
     @params.setter
     def params(self, params: np.ndarray) -> None:
         self._check_params_are_valid(params)
         if self.learn_sigma:
-            self._sigma_exp = np.exp(params).flatten()
+            self._sigma = np.exp(params).flatten()
 
     @property
     def true_params(self) -> np.ndarray:
@@ -37,7 +37,7 @@ class Linear(Kernel):
         grads = []
         if self.learn_sigma:
             prod = np.dot(x, x.T)
-            dsigma = self._sigma_exp * prod
+            dsigma = self._sigma * prod
             grads.append(dsigma)
         return grads
 
