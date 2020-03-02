@@ -9,4 +9,4 @@ install:
   - pip install pipenv
   - pipenv sync --dev
 script:
-  - pipenv run pytest --codestyle --flakes --mypy
+  - pipenv run pytest --pycodestyle --flakes --mypy
