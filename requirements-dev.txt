@@ -1,5 +1,5 @@
 -i https://pypi.org/simple
-appnope==0.1.0 ; sys_platform == 'darwin'
+appnope==0.1.0 ; platform_system == 'Darwin'
 attrs==19.3.0
 backcall==0.1.0
 bleach==3.1.3
