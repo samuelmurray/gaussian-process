@@ -1,21 +1,20 @@
--i https://pypi.org/simple
-appnope==0.1.0 ; sys_platform == 'darwin'
+-i https://pypi.org/simple/
 attrs==19.3.0
 backcall==0.1.0
-bleach==3.1.1
+bleach==3.1.2
 decorator==4.4.2
 defusedxml==0.6.0
 entrypoints==0.3
 filelock==3.0.12
 importlib-metadata==1.5.0 ; python_version < '3.8'
-ipykernel==5.1.4
+ipykernel==5.2.0
 ipython-genutils==0.2.0
 ipython==7.13.0
 ipywidgets==7.5.1
 jedi==0.16.0
 jinja2==2.11.1
 jsonschema==3.2.0
-jupyter-client==6.0.0
+jupyter-client==6.1.0
 jupyter-console==6.1.0
 jupyter-core==4.6.3
 jupyter==1.0.0
@@ -23,23 +22,23 @@ markupsafe==1.1.1
 mistune==0.8.4
 more-itertools==8.2.0
 mypy-extensions==0.4.3
-mypy==0.761 ; python_version >= '3.5' and python_version < '3.8'
+mypy==0.770 ; python_version >= '3.5' and python_version < '3.8'
 nbconvert==5.6.1
 nbformat==5.0.4
 notebook==6.0.3
-packaging==20.1
+packaging==20.3
 pandocfilters==1.4.2
 parso==0.6.2
 pexpect==4.8.0 ; sys_platform != 'win32'
 pickleshare==0.7.5
 pluggy==0.13.1
 prometheus-client==0.7.1
-prompt-toolkit==3.0.3
+prompt-toolkit==3.0.4
 ptyprocess==0.6.0 ; os_name != 'nt'
 py==1.8.1
 pycodestyle==2.5.0
 pyflakes==2.1.1
-pygments==2.5.2
+pygments==2.6.1
 pyparsing==2.4.6
 pyrsistent==0.15.7
 pytest-codestyle==2.0.0
@@ -48,17 +47,17 @@ pytest-mypy==0.5.0
 pytest==5.3.5
 python-dateutil==2.8.1
 pyzmq==19.0.0
-qtconsole==4.7.0
+qtconsole==4.7.1
 qtpy==1.9.0
 send2trash==1.5.0
 six==1.14.0
 terminado==0.8.3
 testpath==0.4.4
-tornado==6.0.3
+tornado==6.0.4
 traitlets==4.3.3
 typed-ast==1.4.1
 typing-extensions==3.7.4.1
-wcwidth==0.1.8
+wcwidth==0.1.9
 webencodings==0.5.1
 widgetsnbextension==3.5.1
-zipp==3.0.0
+zipp==3.1.0
